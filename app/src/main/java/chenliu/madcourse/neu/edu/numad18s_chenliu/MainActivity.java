@@ -3,6 +3,7 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
     }
     //throw an realtime execption to make app fail
     public void generateError(View view) {
+        String testLabSetting =
+                Settings.System.getString(getApplicationContext().getContentResolver(), "firebase.test.lab");
+        if ("true".equals(testLabSetting)) {
+            // Do something when running in Test Lab
+            return;
+        }
         throw new RuntimeException("ErrorGenerated");
     }
 
