@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/PriyankaBH/scroggle.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://raj_kukadia@bitbucket.org/raj_kukadia/numad17s-raj_kukadia.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="$USER_HOME$/Downloads" />
