@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">NUMAD18S-ChenLiu</string>
+    <string name="about_me">
+        <b>Name: </b> Chen Liu \n<b>Email: </b> liu.chen7@husky.neu.edu \n<b>Year/Major: </b>  17-Fall-CS-Align
+    </string>
+    <string name="acknowledgement_text">
+        Store the data into a hashmap, learnt how to store a hashmap to a file, reference: https://bukkit.org/threads/loading-and-storing-a-hashmap-to-a-file.89570/
+        \n\
+        Learnt how to make beeping, reference: https://stackoverflow.com/questions/12154940/how-to-make-a-beep-in-android
+        \n\
+        Learnt how to extract hashmap to a file, reference:https://stackoverflow.com/questions/12747946/how-to-write-and-read-a-file-with-a-hashmap.
+        \n\
+    </string>
+
 </resources>

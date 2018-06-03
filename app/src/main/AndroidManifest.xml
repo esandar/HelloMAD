@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="chenliu.madcourse.neu.edu.numad18s_chenliu">
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -17,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".TestDictionary" />
+        <activity android:name=".Acknowledgement"></activity>
     </application>
 
 </manifest>

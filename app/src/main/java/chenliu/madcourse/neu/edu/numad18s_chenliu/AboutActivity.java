@@ -1,6 +1,7 @@
 package chenliu.madcourse.neu.edu.numad18s_chenliu;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -11,13 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        this.setTitle("About Me");
         // Check if PHONE_STATE permission is granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {

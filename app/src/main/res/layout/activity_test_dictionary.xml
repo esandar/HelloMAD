@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".TestDictionary">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your word here"
+            android:inputType="text"></EditText>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Search list" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/text_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollIndicators="right" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/bt_dic_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clear_textlist"
+            android:text="CLEAR" />
+
+        <Button
+            android:id="@+id/bt_dic_return"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="return_menu"
+            android:text="RETURN TO MENU" />
+
+        <Button
+            android:id="@+id/bt_dic_ack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="acknowledge_activity"
+            android:text="ACKNOWLEDGEMENT" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

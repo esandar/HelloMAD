@@ -49,5 +49,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
+
+    //Dictionary button
+    public void test_dictionary(View view) {
+        Intent intent = new Intent(this, TestDictionary.class);
+        startActivity(intent);
+    }
 }
 
