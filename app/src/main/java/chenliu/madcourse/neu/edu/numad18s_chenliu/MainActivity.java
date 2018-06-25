@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.UTTT.UTTTMainActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
     //Dictionary button
     public void test_dictionary(View view) {
         Intent intent = new Intent(this, TestDictionary.class);
+        startActivity(intent);
+    }
+
+    //UTTT button
+    public void open_UTTT(View view) {
+        Intent intent = new Intent(this, UTTTMainActivity.class);
         startActivity(intent);
     }
 }

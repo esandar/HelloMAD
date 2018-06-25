@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".AboutActivity" />
         <activity android:name=".TestDictionary" />
-        <activity android:name=".Acknowledgement"></activity>
+        <activity android:name=".Acknowledgement" />
+        <activity android:name=".UTTT.UTTTMainActivity"/>
+        <activity android:name=".UTTT.GameActivity"/>
     </application>
+
 
 </manifest>
