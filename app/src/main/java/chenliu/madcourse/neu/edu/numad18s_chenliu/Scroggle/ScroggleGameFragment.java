@@ -8,6 +8,7 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
  * We make no guarantees that this code is fit for any purpose.
  * Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
  ***/
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -73,14 +74,14 @@ public class ScroggleGameFragment extends Fragment {
     private int mLastLarge;
     private int mLastSmall;
 
-    private String enteredStringSroggle="";
+    private String enteredStringSroggle = "";
     private Button pause;
     private Button doneView;
     private static Boolean done = false;
     private static Boolean donePhaseTwo = false;
-    public static int touchedLargeTile =0;
+    public static int touchedLargeTile = 0;
     private boolean atLeastOneClicked = false;
-    public static int [] touchedSmallTiles=new int[9];
+    public static int[] touchedSmallTiles = new int[9];
     //scoreview
     private TextView v1;
     //timerview
@@ -149,27 +150,28 @@ public class ScroggleGameFragment extends Fragment {
         e = (TextView) getActivity().findViewById(R.id.wd_wordlist);
         muteMusic = (ImageButton) getActivity().findViewById((R.id.bt_wd_sound));
         muteMusic.setImageLevel(1);
-        muteMusic.setOnClickListener(new View.OnClickListener(){
+        muteMusic.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                muteClicked =!muteClicked;
-                if(muteClicked==false){
+                muteClicked = !muteClicked;
+                if (muteClicked == false) {
                     muteMusic.setImageLevel(1);
-                }else{
+                } else {
                     muteMusic.setImageLevel(0);
                 }
-                if(ScroggleGameActivity.mMediaPlayer.isPlaying()){
-                    ScroggleGameActivity.mMediaPlayer.pause();}
-                else{
-                    ScroggleGameActivity.mMediaPlayer.start();}
+                if (ScroggleGameActivity.mMediaPlayer.isPlaying()) {
+                    ScroggleGameActivity.mMediaPlayer.pause();
+                } else {
+                    ScroggleGameActivity.mMediaPlayer.start();
+                }
             }
 
         });
 
         pause = (Button) getActivity().findViewById(R.id.bt_wd_pause);
-        pause.setOnClickListener(new View.OnClickListener(){
+        pause.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -177,8 +179,8 @@ public class ScroggleGameFragment extends Fragment {
             }
         });
 
-        doneView= (Button)getActivity().findViewById(R.id.bt_wd_submit);
-        doneView.setOnClickListener(new View.OnClickListener(){
+        doneView = (Button) getActivity().findViewById(R.id.bt_wd_submit);
+        doneView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -189,9 +191,9 @@ public class ScroggleGameFragment extends Fragment {
     }
 
     //Set tile invisible
-    private void noVisibility(){
-        for(int i = 0;i<9;i++){
-            for(int j = 0; j<9;j++){
+    private void noVisibility() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 ScroggleTile tile = mSmallTiles[i][j];
                 View v = tile.getView();
                 v.setVisibility(View.INVISIBLE);
@@ -202,19 +204,18 @@ public class ScroggleGameFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(muteClicked){
+        if (muteClicked) {
             ScroggleGameActivity.mMediaPlayer.pause();
             muteMusic.setImageLevel(0);
         }
 
         //time
-        if(!gameOver){
+        if (!gameOver) {
             getCounter();
         }
     }
 
-    private void RunAnimation(TextView v)
-    {
+    private void RunAnimation(TextView v) {
         Animation a = AnimationUtils.loadAnimation(getActivity(), R.anim.text_animator);
         a.reset();
         //TextView tv = (TextView) findViewById(R.id.firstTextView);
@@ -222,9 +223,9 @@ public class ScroggleGameFragment extends Fragment {
         v.startAnimation(a);
     }
 
-    private void pausePressed(){
+    private void pausePressed() {
 
-        if(ScroggleGameActivity.mMediaPlayer.isPlaying()) {
+        if (ScroggleGameActivity.mMediaPlayer.isPlaying()) {
             ScroggleGameActivity.mMediaPlayer.pause();
         }
         noVisibility();
@@ -237,11 +238,13 @@ public class ScroggleGameFragment extends Fragment {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(!gameOver){
-                            mHandler.postDelayed(mRunnable, 1000);}
-                        if((!ScroggleGameActivity.mMediaPlayer.isPlaying())&&!muteClicked){
+                        if (!gameOver) {
+                            mHandler.postDelayed(mRunnable, 1000);
+                        }
+                        if ((!ScroggleGameActivity.mMediaPlayer.isPlaying()) && !muteClicked) {
 
-                            ScroggleGameActivity.mMediaPlayer.start();}
+                            ScroggleGameActivity.mMediaPlayer.start();
+                        }
                         for (int k = 0; k < 9; k++) {
                             for (int j = 0; j < 9; j++) {
                                 ScroggleTile tile = mSmallTiles[k][j];
@@ -265,23 +268,20 @@ public class ScroggleGameFragment extends Fragment {
         @Override
         public void run() {
             t--;
-            v.setText("Time left: "+String.valueOf(t)+"  ");
-            v1.setText("Score: "+String.valueOf(currentScore)+"  ");
-            if(t<11){
-                RunAnimation(v);}
-            //while(t!=0) {
-
-            if(t==0){
-                if(!phaseTwo) {
+            v.setText("Time left: " + String.valueOf(t) + "  ");
+            v1.setText("Score: " + String.valueOf(currentScore) + "  ");
+            if (t < 11) {
+                RunAnimation(v);
+            }
+            if (t == 0) {
+                if (!phaseTwo) {
 
                     v.setText("");
-                    if(DoneTiles.size()!=0){
-                        //for(int i = 0; i<3;i++){
+                    if (DoneTiles.size() != 0) {
                         v1.setText("Phase two begins..");
                         RunAnimation(v1);
-
-                        // }
-                        setPhasetwo();} else {
+                        setPhasetwo();
+                    } else {
                         gameOver = true;
                         mHandler.removeCallbacks(mRunnable);
                         clearAvailable();
@@ -291,13 +291,12 @@ public class ScroggleGameFragment extends Fragment {
                 } else {
                     gameOver = true;
                     mHandler.removeCallbacks(mRunnable);
-                    //mEntireBoard.getView().setVisibility(View.INVISIBLE);
                     clearAvailable();
-                    phaseTwo=false;
+                    phaseTwo = false;
                     Intent i = new Intent(getActivity(), ScroggleStatus.class);
                     getActivity().startActivity(i);
                 }
-            }else {
+            } else {
                 mHandler.postDelayed(mRunnable, 1000);
             }
         }
@@ -311,39 +310,33 @@ public class ScroggleGameFragment extends Fragment {
         mAvailable.add(tile);
     }
 
-    private void setPhasetwo(){
-        t=90;
-        atLeastOneClicked =false;
+    private void setPhasetwo() {
+        t = 90;
+        atLeastOneClicked = false;
         getCounter();
-        //
         phaseTwo = true;
-        //done = false;
-        for(int i = 0;i<9;i++){
-            for(int j = 0;j<9;j++) {
-
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                ScroggleTile tile = mSmallTiles[i][j];
                 if (DoneTiles.contains(i)) {
-                    ScroggleTile tile = mSmallTiles[i][j];
                     tile.setOwner(ScroggleTile.Owner.AVAILABLE);
                     addAvailable(tile);
                     tile.updateDrawableState('a', 0);
-                }else{
-                    ScroggleTile tile = mSmallTiles[i][j];
+                } else {
                     tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                    //((Button)tile.getView()).setText("");
                     tile.updateDrawableState(' ', 1);
                 }
 
-                ScroggleTile tile = mSmallTiles[i][j];
-                if(((Button)mSmallTiles[i][j].getView()).getText().toString().charAt(0)==' '){
+                if (((Button) tile.getView()).getText().toString().charAt(0) == ' ') {
                     // Log.d("Yes ", "it came");
-                    if(mAvailable.contains(tile)){
+                    if (mAvailable.contains(tile)) {
                         mAvailable.remove(tile);
                     }
 
-                }
-                else{
-                    if(!mAvailable.contains(tile)){
-                        addAvailable(tile);}
+                } else {
+                    if (!mAvailable.contains(tile)) {
+                        addAvailable(tile);
+                    }
                 }
 
             }
@@ -352,7 +345,7 @@ public class ScroggleGameFragment extends Fragment {
 
     }
 
-    private void setAdjacencyList(){
+    private void setAdjacencyList() {
         //block #0
         int array[] = {2, 5, 6, 7, 8};
         adjacencyList.add(array);
@@ -388,7 +381,7 @@ public class ScroggleGameFragment extends Fragment {
     }
 
 
-    private void loadScores(){
+    private void loadScores() {
 
         score.put("A", 1);
         score.put("B", 3);
@@ -418,7 +411,7 @@ public class ScroggleGameFragment extends Fragment {
         score.put("Z", 10);
     }
 
-    private String[] generateRandomWords(){
+    private String[] generateRandomWords() {
         for (int i = 0; i < 9; i++) {
             Random randomGenerator;
             randomGenerator = new Random();
@@ -480,12 +473,12 @@ public class ScroggleGameFragment extends Fragment {
                         smallTile.animate();
                         totalClicks++;
 
-                        if (isAvailable(smallTile)&&(!gameOver)) {
+                        if (isAvailable(smallTile) && (!gameOver)) {
                             mSoundPool.play(mSoundClick, mVolume, mVolume, 1, 0, 1f);
 
                             makeMove(fLarge, fSmall); //makes the move and sets available the corresponding tile
-                            touchedLargeTile =fLarge;
-                            touchedSmallTiles[fSmall] = fSmall+1;
+                            touchedLargeTile = fLarge;
+                            touchedSmallTiles[fSmall] = fSmall + 1;
                             getButtonText(smallTile); //put button letter to string
 
                         } else {
@@ -499,14 +492,14 @@ public class ScroggleGameFragment extends Fragment {
 
     }
 
-    private void getButtonText(ScroggleTile smallTile){
+    private void getButtonText(ScroggleTile smallTile) {
         Button temp = (Button) smallTile.getView();
         enteredStringSroggle += temp.getText();
     }
 
     public Boolean searchWordInMap(String word) {
 
-        if(GlobalClass.list.get(word.toLowerCase().substring(0, 3)).contains(word.toLowerCase())){
+        if (GlobalClass.list.get(word.toLowerCase().substring(0, 3)).contains(word.toLowerCase())) {
             return true;
         }
 
@@ -557,7 +550,7 @@ public class ScroggleGameFragment extends Fragment {
 
 
             } else {
-            //phase two
+                //phase two
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         ScroggleTile tile = mSmallTiles[i][j];
@@ -644,7 +637,7 @@ public class ScroggleGameFragment extends Fragment {
 
                 }
 
-;
+                ;
                 enteredStringSroggle = "";
 
             }
@@ -694,10 +687,10 @@ public class ScroggleGameFragment extends Fragment {
         enteredStringSroggle = "";
     }
 
-    private void updateScore(ScroggleTile tile, int factor){
+    private void updateScore(ScroggleTile tile, int factor) {
         //length of the word will be the bonus factor
         String x = ((Button) tile.getView()).getText().toString();
-        currentScore += (score.get(x))*factor;
+        currentScore += (score.get(x)) * factor;
     }
 
 //    private void checkUnPressed(){
@@ -722,8 +715,9 @@ public class ScroggleGameFragment extends Fragment {
         ScroggleTile largeTile = mLargeTiles[large];
         smallTile.setOwner(ScroggleTile.Owner.CLICKED);
         //setAvailableFromLastMove(small);
-        if(!phaseTwo){
-            done = false;}
+        if (!phaseTwo) {
+            done = false;
+        }
         setAvailableFromLastMove(large, small); //changed from small to large
         smallTile.updateDrawableState('a', 0);
 
@@ -740,16 +734,16 @@ public class ScroggleGameFragment extends Fragment {
         //if(e!=null){
         e.setText("");
         //}
-        popup =false;
-        atLeastOneClicked =false;
-        currentScore =0;
+        popup = false;
+        atLeastOneClicked = false;
+        currentScore = 0;
         initViews(getView());
-        t=90;
-        enteredStringSroggle="";
-        notValidWord=false;
+        t = 90;
+        enteredStringSroggle = "";
+        notValidWord = false;
         //  canShowDialogBox =false;
-        phaseTwo=false;
-        hashKey=0;
+        phaseTwo = false;
+        hashKey = 0;
         wordsDetectedByUser.clear();
         mHandler.postDelayed(mRunnable, 1000);
 
@@ -760,8 +754,6 @@ public class ScroggleGameFragment extends Fragment {
         clearAvailable();
         // Make all the tiles at the destination available
         if (large != -1) {
-
-
             for (int i = 0; i < 9; i++) {
                 for (int dest = 0; dest < 9; dest++) {
                     if (!phaseTwo) {
@@ -771,91 +763,96 @@ public class ScroggleGameFragment extends Fragment {
                                 if ((tile.getOwner() == ScroggleTile.Owner.AVAILABLE))
                                     addAvailable(tile);
 
-                                switch (smallx) {
-                                    case 0:
-                                        int a[] = adjacencyList.get(0);
-
-                                        for (int x : a) {
-                                            ScroggleTile tile1 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile1)) {
-                                            mAvailable.remove(tile1);
-                                            //}
-                                        }
-                                        break;
-                                    case 1:
-                                        int a1[] = adjacencyList.get(1);
-
-                                        for (int x : a1) {
-                                            ScroggleTile tile2 = mSmallTiles[large][x];
-                                            // if(mAvailable.contains(tile2)) {
-                                            mAvailable.remove(tile2);
-                                            //}
-                                        }
-                                        break;
-                                    case 2:
-                                        int a2[] = adjacencyList.get(2);
-                                        for (int x : a2) {
-                                            ScroggleTile tile3 = mSmallTiles[large][x];
-                                            // if(mAvailable.contains(tile3)) {
-                                            mAvailable.remove(tile3);
-                                            // }
-                                        }
-                                        break;
-                                    case 3:
-                                        int a3[] = adjacencyList.get(3);
-                                        for (int x : a3) {
-                                            ScroggleTile tile4 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile4)) {
-                                            mAvailable.remove(tile4);
-                                            // }
-                                        }
-                                        break;
-                                    case 4:
-                                        int a4[] = adjacencyList.get(4);
-                                        for (int x : a4) {
-                                            ScroggleTile tile5 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile5)) {
-                                            mAvailable.remove(tile5);//}
-
-                                        }
-                                        break;
-                                    case 5:
-                                        int a5[] = adjacencyList.get(5);
-                                        for (int x : a5) {
-                                            ScroggleTile tile6 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile6)) {
-                                            mAvailable.remove(tile6);//}
-
-                                        }
-                                        break;
-                                    case 6:
-                                        int a6[] = adjacencyList.get(6);
-                                        for (int x : a6) {
-                                            ScroggleTile tile7 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile7)) {
-                                            mAvailable.remove(tile7);//}
-
-                                        }
-                                        break;
-                                    case 7:
-                                        int a7[] = adjacencyList.get(7);
-                                        for (int x : a7) {
-                                            ScroggleTile tile8 = mSmallTiles[large][x];
-                                            // if(mAvailable.contains(tile8)) {
-                                            mAvailable.remove(tile8);//}
-
-                                        }
-                                        break;
-                                    case 8:
-                                        int a8[] = adjacencyList.get(8);
-                                        for (int x : a8) {
-                                            ScroggleTile tile9 = mSmallTiles[large][x];
-                                            //if(mAvailable.contains(tile9)) {
-                                            mAvailable.remove(tile9);//}
-
-                                        }
-                                        break;
+                                int a[] = adjacencyList.get(smallx);
+                                for(int x:a) {
+                                    ScroggleTile tile = mSmallTiles[large][x];
+                                    mAvailable.remove(tile);
                                 }
+//                                switch (smallx) {
+//                                    case 0:
+//                                        int a[] = adjacencyList.get(0);
+//
+//                                        for (int x : a) {
+//                                            ScroggleTile tile1 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile1)) {
+//                                            mAvailable.remove(tile1);
+//                                            //}
+//                                        }
+//                                        break;
+//                                    case 1:
+//                                        int a1[] = adjacencyList.get(1);
+//
+//                                        for (int x : a1) {
+//                                            ScroggleTile tile2 = mSmallTiles[large][x];
+//                                            // if(mAvailable.contains(tile2)) {
+//                                            mAvailable.remove(tile2);
+//                                            //}
+//                                        }
+//                                        break;
+//                                    case 2:
+//                                        int a2[] = adjacencyList.get(2);
+//                                        for (int x : a2) {
+//                                            ScroggleTile tile3 = mSmallTiles[large][x];
+//                                            // if(mAvailable.contains(tile3)) {
+//                                            mAvailable.remove(tile3);
+//                                            // }
+//                                        }
+//                                        break;
+//                                    case 3:
+//                                        int a3[] = adjacencyList.get(3);
+//                                        for (int x : a3) {
+//                                            ScroggleTile tile4 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile4)) {
+//                                            mAvailable.remove(tile4);
+//                                            // }
+//                                        }
+//                                        break;
+//                                    case 4:
+//                                        int a4[] = adjacencyList.get(4);
+//                                        for (int x : a4) {
+//                                            ScroggleTile tile5 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile5)) {
+//                                            mAvailable.remove(tile5);//}
+//
+//                                        }
+//                                        break;
+//                                    case 5:
+//                                        int a5[] = adjacencyList.get(5);
+//                                        for (int x : a5) {
+//                                            ScroggleTile tile6 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile6)) {
+//                                            mAvailable.remove(tile6);//}
+//
+//                                        }
+//                                        break;
+//                                    case 6:
+//                                        int a6[] = adjacencyList.get(6);
+//                                        for (int x : a6) {
+//                                            ScroggleTile tile7 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile7)) {
+//                                            mAvailable.remove(tile7);//}
+//
+//                                        }
+//                                        break;
+//                                    case 7:
+//                                        int a7[] = adjacencyList.get(7);
+//                                        for (int x : a7) {
+//                                            ScroggleTile tile8 = mSmallTiles[large][x];
+//                                            // if(mAvailable.contains(tile8)) {
+//                                            mAvailable.remove(tile8);//}
+//
+//                                        }
+//                                        break;
+//                                    case 8:
+//                                        int a8[] = adjacencyList.get(8);
+//                                        for (int x : a8) {
+//                                            ScroggleTile tile9 = mSmallTiles[large][x];
+//                                            //if(mAvailable.contains(tile9)) {
+//                                            mAvailable.remove(tile9);//}
+//
+//                                        }
+//                                        break;
+//                                }
 
                             } else {
                                 if (DoneTiles.contains(i)) {
@@ -881,7 +878,7 @@ public class ScroggleGameFragment extends Fragment {
                         }
 
 
-                    }else {
+                    } else {
 
                         if (i == large) {
                             if (dest == smallx) {
@@ -914,7 +911,7 @@ public class ScroggleGameFragment extends Fragment {
                             }
                             //  if(((((Button)mSmallTiles[i][dest].getView()).getText().toString().equals(null))||((Button)mSmallTiles[i][dest].getView()).getText().toString().charAt(0)==' ')||(((Button)mSmallTiles[i][dest].getView()).getText().toString().equals(""))){
 
-                            if ((!mAvailable.contains(tile3))&&(tile3.getView().toString().charAt(0)!=' ')){
+                            if ((!mAvailable.contains(tile3)) && (tile3.getView().toString().charAt(0) != ' ')) {
                                 mAvailable.add(tile3);
                             }
 
@@ -922,18 +919,17 @@ public class ScroggleGameFragment extends Fragment {
                             tile3.updateDrawableState('a', 0);
 
 
-
                             ScroggleTile tile = mSmallTiles[i][dest];
-                            if(((Button)mSmallTiles[i][dest].getView()).getText().toString().charAt(0)==' '){
+                            if (((Button) mSmallTiles[i][dest].getView()).getText().toString().charAt(0) == ' ') {
                                 // Log.d("Yes ", "it came");
-                                if(mAvailable.contains(tile)){
+                                if (mAvailable.contains(tile)) {
                                     mAvailable.remove(tile);
                                 }
 
-                            }
-                            else{
-                                if(!mAvailable.contains(tile)){
-                                    addAvailable(tile);}
+                            } else {
+                                if (!mAvailable.contains(tile)) {
+                                    addAvailable(tile);
+                                }
                             }
 
                         }
@@ -943,7 +939,7 @@ public class ScroggleGameFragment extends Fragment {
             }
         }
         // If there were none available, make all squares available
-        if (mAvailable.isEmpty()&&large==-1) {
+        if (mAvailable.isEmpty() && large == -1) {
             setAllAvailable();
         }
     }
@@ -979,133 +975,133 @@ public class ScroggleGameFragment extends Fragment {
 
     }
 
-    private char[][] generateCharArrays(String [] randomStrings){
+    private char[][] generateCharArrays(String[] randomStrings) {
         char[][] randomStringsCharArray = new char[9][];
-        for(int a = 0; a<9; a++) {
-            randomStringsCharArray[a]= randomStrings[a].toCharArray();
+        for (int a = 0; a < 9; a++) {
+            randomStringsCharArray[a] = randomStrings[a].toCharArray();
         }
         return randomStringsCharArray;
     }
 
-    private int choosePatternNumber(){
+    private int choosePatternNumber() {
 
         Random r = new Random();
         int num = r.nextInt(8);
         return num;
     }
 
-    private void fixSmallBoards(char [] finalSequenceOfCharacters, int finalPattern, int large){
+    private void fixSmallBoards(char[] finalSequenceOfCharacters, int finalPattern, int large) {
 
-        switch(finalPattern){
+        switch (finalPattern) {
 
             case 0:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
                 break;
             case 1:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
                 break;
 
             case 2:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
                 break;
 
             case 3:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
                 break;
 
             case 4:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
                 break;
 
             case 5:
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
                 break;
 
             case 6:
 
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
                 break;
 
             case 7:
 
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
                 break;
 
             case 8:
 
-                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[8]-32), 1);
-                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[7]-32), 1);
-                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[6]-32), 1);
-                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[0]-32), 1);
-                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2]-32), 1);
-                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[5]-32), 1);
-                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[1]-32), 1);
-                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[3]-32), 1);
-                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[4]-32), 1);
+                mSmallTiles[large][0].updateDrawableState((char) (finalSequenceOfCharacters[8] - 32), 1);
+                mSmallTiles[large][1].updateDrawableState((char) (finalSequenceOfCharacters[7] - 32), 1);
+                mSmallTiles[large][2].updateDrawableState((char) (finalSequenceOfCharacters[6] - 32), 1);
+                mSmallTiles[large][3].updateDrawableState((char) (finalSequenceOfCharacters[0] - 32), 1);
+                mSmallTiles[large][4].updateDrawableState((char) (finalSequenceOfCharacters[2] - 32), 1);
+                mSmallTiles[large][5].updateDrawableState((char) (finalSequenceOfCharacters[5] - 32), 1);
+                mSmallTiles[large][6].updateDrawableState((char) (finalSequenceOfCharacters[1] - 32), 1);
+                mSmallTiles[large][7].updateDrawableState((char) (finalSequenceOfCharacters[3] - 32), 1);
+                mSmallTiles[large][8].updateDrawableState((char) (finalSequenceOfCharacters[4] - 32), 1);
                 break;
         }
     }
@@ -1247,7 +1243,10 @@ public class ScroggleGameFragment extends Fragment {
             }
         }
     }
-    /** Create a string containing the state of the game. */
+
+    /**
+     * Create a string containing the state of the game.
+     */
     public String getState() {
         StringBuilder builder = new StringBuilder();
         //builder.append(muteMusic.getBackground().getLevel());
@@ -1258,9 +1257,10 @@ public class ScroggleGameFragment extends Fragment {
         builder.append(',');
         builder.append(wordsDetectedByUser.size());
         builder.append(',');
-        for(int i =0;i<wordsDetectedByUser.size();i++)
-        { builder.append(wordsDetectedByUser.get(i));
-            builder.append(',');}
+        for (int i = 0; i < wordsDetectedByUser.size(); i++) {
+            builder.append(wordsDetectedByUser.get(i));
+            builder.append(',');
+        }
         builder.append(notValidWord);
         builder.append(',');
         //   m1Handler.removeCallbacks(m1Runnable);
@@ -1274,7 +1274,7 @@ public class ScroggleGameFragment extends Fragment {
         Object a[] = DoneTiles.toArray();
         builder.append(a.length);
         builder.append(',');
-        for(int i=0;i<a.length;i++) {
+        for (int i = 0; i < a.length; i++) {
             builder.append(a[i].toString());
             builder.append(',');
         }
@@ -1286,7 +1286,7 @@ public class ScroggleGameFragment extends Fragment {
             for (int small = 0; small < 9; small++) {
                 builder.append(mSmallTiles[large][small].getOwner().name());
                 builder.append(',');
-                builder.append((((Button)mSmallTiles[large][small].getView()).getText()).toString());
+                builder.append((((Button) mSmallTiles[large][small].getView()).getText()).toString());
                 builder.append(',');
                 //Log.d(DoneTiles);
             }
@@ -1294,7 +1294,9 @@ public class ScroggleGameFragment extends Fragment {
         return builder.toString();
     }
 
-    /** Restore the state of the game from the given string. */
+    /**
+     * Restore the state of the game from the given string.
+     */
     public void putState(String gameData) {
         String[] fields = gameData.split(",");
         //setPhaseTwoLogic();
@@ -1310,23 +1312,23 @@ public class ScroggleGameFragment extends Fragment {
 
         e.setText("");
 
-        for(int i = 0; i<size; i++){
+        for (int i = 0; i < size; i++) {
 
             wordsDetectedByUser.put(i, fields[index++]);
 
-            e.append(wordsDetectedByUser.get(i)+" ");
+            e.append(wordsDetectedByUser.get(i) + " ");
 
         }
-        notValidWord =Boolean.parseBoolean(fields[index++]);
-        phaseTwo =Boolean.parseBoolean(fields[index++]);
+        notValidWord = Boolean.parseBoolean(fields[index++]);
+        phaseTwo = Boolean.parseBoolean(fields[index++]);
 
 
         currentScore = Integer.parseInt(fields[index++]);
         t = Integer.parseInt(fields[index++]);
         int length = Integer.parseInt((fields[index++]));
-        int a[ ]= new int[length];
-        for(int i=0;i<length;i++){
-            a[i]=Integer.parseInt(fields[index++]);
+        int a[] = new int[length];
+        for (int i = 0; i < length; i++) {
+            a[i] = Integer.parseInt(fields[index++]);
             DoneTiles.add(a[i]);
         }
 
