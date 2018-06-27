@@ -493,7 +493,7 @@ public class ScroggleGameFragment extends Fragment {
     }
 
     public Boolean searchWordInMap(String word) {
-
+        if (GlobalClass.list.get(word.toLowerCase().substring(0, 3)) == null) return false;
         if (GlobalClass.list.get(word.toLowerCase().substring(0, 3)).contains(word.toLowerCase())) {
             return true;
         }
