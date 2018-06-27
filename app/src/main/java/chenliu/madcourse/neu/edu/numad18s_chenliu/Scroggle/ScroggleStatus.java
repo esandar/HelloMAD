@@ -36,7 +36,7 @@ public class ScroggleStatus extends Activity{
 
         }
             t4.setText("Total Score\n"+String.valueOf(ScroggleGameFragment.currentScore)+"\n");
-       t5.setText("Total Valid Clicks\n"+String.valueOf(ScroggleGameFragment.totalClicks));
+      // t5.setText("Total Valid Clicks\n"+String.valueOf(ScroggleGameFragment.totalClicks));
 
 
     }
