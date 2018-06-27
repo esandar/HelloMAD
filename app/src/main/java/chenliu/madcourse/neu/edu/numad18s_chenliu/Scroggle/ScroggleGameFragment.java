@@ -353,24 +353,31 @@ public class ScroggleGameFragment extends Fragment {
     }
 
     private void setAdjacencyList(){
-
+        //block #0
         int array[] = {2, 5, 6, 7, 8};
         adjacencyList.add(array);
+        //block #1
         int array1[] = {6, 7, 8};
         adjacencyList.add(array1);
-
+        //block #2
         int array2[] = {0, 3, 6, 7, 8};
         adjacencyList.add(array2);
+        //block #3
         int array3[] = {2, 5, 8};
         adjacencyList.add(array3);
+        //block #4
         int array4[] = {};
         adjacencyList.add(array4);
+        //block #5
         int array5[] = {0, 3, 6};
         adjacencyList.add(array5);
+        //block #6
         int array6[] = {0, 1, 2, 5, 8};
         adjacencyList.add(array6);
+        //block #7
         int array7[] = {0, 1, 2};
         adjacencyList.add(array7);
+        //block #8
         int array8[] = {0, 1, 2, 3, 6};
         adjacencyList.add(array8);
 
@@ -417,7 +424,6 @@ public class ScroggleGameFragment extends Fragment {
             randomGenerator = new Random();
             int index = randomGenerator.nextInt(GlobalClass.nineLetterWords.size());
             String item = GlobalClass.nineLetterWords.get(index);
-            //     Log.d("TAG_ScroggleFragment", "Words selected " + item + " our recommendation to you");
             nineNineLetterWords[i] = item;
         }
         return nineNineLetterWords;
@@ -475,14 +481,12 @@ public class ScroggleGameFragment extends Fragment {
                         totalClicks++;
 
                         if (isAvailable(smallTile)&&(!gameOver)) {
-                            //(getActivity()).startThinking();
                             mSoundPool.play(mSoundClick, mVolume, mVolume, 1, 0, 1f);
 
                             makeMove(fLarge, fSmall); //makes the move and sets available the corresponding tile
-
                             touchedLargeTile =fLarge;
                             touchedSmallTiles[fSmall] = fSmall+1;
-                            getButtonText(smallTile);
+                            getButtonText(smallTile); //put button letter to string
 
                         } else {
                             mSoundPool.play(mSoundMiss, mVolume, mVolume, 1, 0, 1f);
@@ -528,7 +532,7 @@ public class ScroggleGameFragment extends Fragment {
             return;
 
         }
-
+        // when word is valid
         if (searchWordInMap(enteredStringSroggle)) {
             //Entering text to the screen
             wordsDetectedByUser.put(hashKey++, enteredStringSroggle);
@@ -542,26 +546,7 @@ public class ScroggleGameFragment extends Fragment {
                         tile.updateDrawableState(' ', 1);
                         // }
                     } else {
-
-                        switch (enteredStringSroggle.length()) {
-                            case 9:
-                                updateScore(((Button) mSmallTiles[touchedLargeTile][i].getView()).getText().toString(), 50);
-                                break;
-                            case 5:
-                            case 6:
-                                updateScore(((Button) mSmallTiles[touchedLargeTile][i].getView()).getText().toString(), 5);
-                                break;
-                            case 7:
-                                updateScore(((Button) mSmallTiles[touchedLargeTile][i].getView()).getText().toString(), 20);
-                                break;
-                            case 8:
-                                updateScore(((Button) mSmallTiles[touchedLargeTile][i].getView()).getText().toString(), 30);
-                                break;
-
-                            default:
-                                updateScore(((Button) mSmallTiles[touchedLargeTile][i].getView()).getText().toString(), 1);
-
-                        }
+                        updateScore(tile, enteredStringSroggle.length());
                     }
 
                 }
@@ -572,32 +557,12 @@ public class ScroggleGameFragment extends Fragment {
 
 
             } else {
-
+            //phase two
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         ScroggleTile tile = mSmallTiles[i][j];
                         if (tile.getOwner() == ScroggleTile.Owner.CLICKED) {
-
-                            switch (enteredStringSroggle.length()) {
-                                case 9:
-                                    updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 50);
-                                    break;
-                                case 5:
-                                case 6:
-                                    updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 5);
-                                    break;
-                                case 7:
-                                    updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 20);
-                                    break;
-                                case 8:
-                                    updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 30);
-                                    break;
-
-                                default:
-                                    updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 1);
-
-                            }
-
+                            updateScore(tile, enteredStringSroggle.length());
                         }
                     }
                 }
@@ -725,34 +690,30 @@ public class ScroggleGameFragment extends Fragment {
         for (int x = 0; x < touchedSmallTiles.length; x++) {
             touchedSmallTiles[x] = 0;
         }
-
         touchedLargeTile = 0;
-        //DictionaryAssignment3.result.setText("");
-
         enteredStringSroggle = "";
     }
 
-    private void updateScore(String x, int bonus){
-
-        currentScore += (score.get(x))*bonus;
-
+    private void updateScore(ScroggleTile tile, int factor){
+        //length of the word will be the bonus factor
+        String x = ((Button) tile.getView()).getText().toString();
+        currentScore += (score.get(x))*factor;
     }
 
-    private void checkUnPressed(){
-
-        for(int j = 0; j<9; j++) {
-
-            if (touchedSmallTiles[j]==0) {
-                ScroggleTile demo = mSmallTiles[touchedLargeTile][j];
-
-                mAvailable.remove(demo);
-                //demo.setOwner(T9leAssignment5.Owner.NOTCLICKED);
-                demo.updateDrawableState('a', 0);
-            }
-
-        }
-
-    }
+//    private void checkUnPressed(){
+//
+//        for(int j = 0; j<9; j++) {
+//
+//            if (touchedSmallTiles[j]==0) {
+//                ScroggleTile demo = mSmallTiles[touchedLargeTile][j];
+//
+//                mAvailable.remove(demo);
+//                demo.updateDrawableState('a', 0);
+//            }
+//
+//        }
+//
+//    }
 
     private void makeMove(int large, int small) {
         mLastLarge = large;
