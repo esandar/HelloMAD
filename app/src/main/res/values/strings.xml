@@ -39,9 +39,10 @@
     </string>
     <string name="wd_ins">
         This game has two phases. In the first 90 seconds, you have to select 9 words from 9 of the
-        3x3 grids. You have to finish one grid before moving to others. You need to click to submit
-        your choice.\n\
+        3x3 grids. You have to finish one grid before moving to others. The word has to have more than three letters.
+        You need to click to submit your choice.\n\
         When you finish 9 selections or the time is up, you will move to the next phase.
-        You can select one word from all the letters you have picked from first phase.\n\
+        You can only select one from all available letters in each big grid to make a new word. Try to make as many
+        as you can within the time limit.\n\
     </string>
 </resources>
