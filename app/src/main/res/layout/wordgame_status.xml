@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/menu_button_margin"
+    tools:context=".Scroggle.ScroggleStatus">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textview_scroggle_status_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/control_padding"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                >
+
+            </TextView>
+            <TextView
+                android:id="@+id/textview_scroggle_status_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:textSize="25sp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
+
+            <TextView
+                android:id="@+id/textview_scroggle_status_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:scrollbars="vertical"
+                >
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/textview_scroggle_status_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:textSize="25sp"
+
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
+            <TextView
+                android:id="@+id/textview_scroggle_status_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:textSize="25sp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

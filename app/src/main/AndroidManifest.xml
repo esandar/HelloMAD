@@ -21,9 +21,11 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".TestDictionary" />
         <activity android:name=".Acknowledgement" />
-        <activity android:name=".UTTT.UTTTMainActivity"/>
-        <activity android:name=".UTTT.GameActivity"/>
+        <activity android:name=".UTTT.UTTTMainActivity" />
+        <activity android:name=".UTTT.GameActivity" />
+        <activity android:name=".Scroggle.ScroggleGameActivity" />
+        <activity android:name=".Scroggle.ScroggleMainActivity" />
+        <activity android:name=".Scroggle.ScroggleStatus" />
     </application>
-
 
 </manifest>

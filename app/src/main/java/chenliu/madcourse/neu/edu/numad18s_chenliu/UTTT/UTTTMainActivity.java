@@ -13,6 +13,13 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
 public class UTTTMainActivity extends Activity {

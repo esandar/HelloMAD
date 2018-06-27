@@ -10,6 +10,8 @@
     <color name="blue_color">#7f7fff</color>
     <color name="gray_color">#bfbfbf</color>
     <color name="purple_color">#7f007f</color>
+    <color name="black_color">#000000</color>
     <color name="red_color">#ff7f7f</color>
+    <color name="green_color">#FF99CC00</color>
     <color name="thinking_background_color">#cfdfdfdf</color>
 </resources>

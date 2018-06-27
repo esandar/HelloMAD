@@ -1,0 +1,37 @@
+<!--
+ ! Excerpted from "Hello, Android",
+ ! published by The Pragmatic Bookshelf.
+ ! Copyrights apply to this code. It may not be used to create training material,
+ ! courses, books, articles, and the like. Contact us if you are in doubt.
+ ! We make no guarantees that this code is fit for any purpose.
+ ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
+-->
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/wordgame_tile"
+    android:elevation="@dimen/elevation_low"
+    android:padding="@dimen/small_board_padding"
+    tools:context=".Scroggle.ScroggleGameActivity">
+
+    <Button android:id="@+id/wd_small1" style="@style/TileButton"
+        android:layout_column="0" android:layout_row="0"/>
+    <Button android:id="@+id/wd_small2" style="@style/TileButton"
+        android:layout_column="1" android:layout_row="0"/>
+    <Button android:id="@+id/wd_small3" style="@style/TileButton"
+        android:layout_column="2" android:layout_row="0"/>
+    <Button android:id="@+id/wd_small4" style="@style/TileButton"
+        android:layout_column="0" android:layout_row="1"/>
+    <Button android:id="@+id/wd_small5" style="@style/TileButton"
+        android:layout_column="1" android:layout_row="1"/>
+    <Button android:id="@+id/wd_small6" style="@style/TileButton"
+        android:layout_column="2" android:layout_row="1"/>
+    <Button android:id="@+id/wd_small7" style="@style/TileButton"
+        android:layout_column="0" android:layout_row="2"/>
+    <Button android:id="@+id/wd_small8" style="@style/TileButton"
+        android:layout_column="1" android:layout_row="2"/>
+    <Button android:id="@+id/wd_small9" style="@style/TileButton"
+        android:layout_column="2" android:layout_row="2"/>
+</GridLayout>
