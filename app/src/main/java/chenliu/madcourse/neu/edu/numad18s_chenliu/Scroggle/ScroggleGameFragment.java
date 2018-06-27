@@ -94,8 +94,6 @@ public class ScroggleGameFragment extends Fragment {
     private ArrayList<int[]> adjacencyList = new ArrayList<int[]>();
     private static Boolean comingFirstTime = true;
     int t = 90;
-
-    static private List<List<Integer>> letterPostions = new ArrayList<List<Integer>>();
     private HashMap<String, Integer> score = new HashMap<String, Integer>();
     public static int currentScore = 0;
     private static boolean phaseTwo = false;
@@ -503,20 +501,8 @@ public class ScroggleGameFragment extends Fragment {
     }
 
     public Boolean searchWordInMap(String word) {
-        if (list1.isEmpty()) {
-            InputStream strF = null;
-            try {
-                strF = getResources().getAssets().open("hashmap");
-                ObjectInputStream ois=new ObjectInputStream(strF);
-                list1 = (HashMap<String,ArrayList<String>>)ois.readObject();
-                ois.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch(ClassNotFoundException ce){
-                System.err.print(ce);
-            }
-        }
-        if(list1.get(word.toLowerCase().substring(0,3)).contains(word.toLowerCase())){
+
+        if(GlobalClass.list.get(word.toLowerCase().substring(0, 3)).contains(word.toLowerCase())){
             return true;
         }
 
@@ -526,12 +512,26 @@ public class ScroggleGameFragment extends Fragment {
 
     private void donePressed() {
 
-        //specially for first large tile touchedLargeTile = 0;
+        //Need at least three letters
+        if (enteredStringSroggle.length() < 2) {
+            builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Need at least 3 letters!");
+            builder.setCancelable(false);
+            builder.setPositiveButton(R.string.ok_label,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-        checkUnPressed();
+                        }
+                    });
+            mDialog = builder.show();
+            return;
+
+        }
 
         if (searchWordInMap(enteredStringSroggle)) {
             //Entering text to the screen
+            wordsDetectedByUser.put(hashKey++, enteredStringSroggle);
             e.append(enteredStringSroggle + " ");
             if (!phaseTwo) {
                 //Clearing off redundant buttons
@@ -597,7 +597,6 @@ public class ScroggleGameFragment extends Fragment {
                                     updateScore(((Button) mSmallTiles[i][j].getView()).getText().toString(), 1);
 
                             }
-                            //DictionaryAssignment3.result.setText("");
 
                         }
                     }
@@ -653,7 +652,7 @@ public class ScroggleGameFragment extends Fragment {
                     // e.a ppend(" ");
                     ScroggleTile tile = mLargeTiles[touchedLargeTile];
                     builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Not a Valid Word !");
+                    builder.setMessage("Invalid Word !");
                     builder.setCancelable(false);
                     builder.setPositiveButton(R.string.ok_label,
                             new DialogInterface.OnClickListener() {
@@ -682,13 +681,7 @@ public class ScroggleGameFragment extends Fragment {
 
 ;
                 enteredStringSroggle = "";
-                // done = false;
-                // for (int x = 0; x < touchedSmallTiles.length; x++) {
-                //   touchedSmallTiles[x] = 0;
-                //}
-                //touchedLargeTile = 0;
 
-                //   }
             }
 
         }
@@ -1390,6 +1383,7 @@ public class ScroggleGameFragment extends Fragment {
         //  setAvailableFromLastMove(mLastLarge, mLastSmall);
         //  updateAllTiles();
         setAvailableAccordingToGamePhase(phaseTwo, mLastSmall, mLastLarge, DoneTiles);
+
     }
 
     public void initGame() {

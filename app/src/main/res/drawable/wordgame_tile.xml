@@ -8,17 +8,26 @@
  ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
 -->
 <level-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!--<item-->
+        <!--android:drawable="@drawable/wordgame_tile_green"-->
+        <!--android:maxLevel="3" />-->
+    <!--<item-->
+        <!--android:drawable="@drawable/wordgame_tile_red"-->
+        <!--android:maxLevel="2" />-->
+    <!--<item-->
+        <!--android:drawable="@drawable/wordgame_tile_grey"-->
+        <!--android:maxLevel="0" />-->
+    <!--<item-->
+        <!--android:drawable="@drawable/uttt_tile_available"-->
+        <!--android:maxLevel="1" />-->
     <item
-        android:drawable="@drawable/wordgame_tile_green"
-        android:maxLevel="3" />
+        android:drawable="@drawable/tile_gray"
+        android:maxLevel="0"/>
     <item
-        android:drawable="@drawable/wordgame_tile_red"
-        android:maxLevel="2" />
+        android:drawable="@drawable/tile_available"
+        android:maxLevel="1"/>
     <item
-        android:drawable="@drawable/wordgame_tile_grey"
-        android:maxLevel="0" />
-    <item
-        android:drawable="@drawable/uttt_tile_available"
-        android:maxLevel="1" />
+        android:drawable="@drawable/tile_red"
+        android:maxLevel="2"/>
 
 </level-list>
