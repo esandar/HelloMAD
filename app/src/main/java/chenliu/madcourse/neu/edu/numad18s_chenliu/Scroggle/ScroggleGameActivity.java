@@ -62,6 +62,9 @@ public class ScroggleGameActivity extends Activity {
         mMediaPlayer.stop();
         mMediaPlayer.reset();
         mMediaPlayer.release();
+        /*
+        need a function to update the small board tile
+         */
         String gameData = mGameFragment.getState();
         getPreferences(MODE_PRIVATE).edit()
                 .putString(PREF_RESTORE, gameData)

@@ -6,7 +6,7 @@ android {
         applicationId 'edu.neu.madcourse.chenliu.mad18s_chenliu'
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 7
+        versionCode 8
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

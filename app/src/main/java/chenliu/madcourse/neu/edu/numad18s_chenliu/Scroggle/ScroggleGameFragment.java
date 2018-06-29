@@ -10,47 +10,30 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
  ***/
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
-import android.content.Context;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.Vibrator;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
@@ -82,16 +65,14 @@ public class ScroggleGameFragment extends Fragment {
     public static int touchedLargeTile = 0;
     private boolean atLeastOneClicked = false;
     public static int[] touchedSmallTiles = new int[9];
-    //scoreview
-    private TextView v1;
-    //timerview
-    private TextView v;
-    //wordlist view
-    public static TextView e;
+    private TextView v1;//scoreview
+    private TextView v; //timer view
+    public static TextView e; //wordlist view
     private boolean popup = false;
     private AlertDialog.Builder builder;
     private AlertDialog mDialog;
     private HashSet<Integer> DoneTiles = new HashSet<Integer>();
+    private int finishedtiles = 0;
     private ArrayList<int[]> adjacencyList = new ArrayList<int[]>();
     private ArrayList<int[]> patternList = new ArrayList<int[]>();
     int t = 90;
@@ -117,10 +98,9 @@ public class ScroggleGameFragment extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-        initGame();
-        generateRandomWords();
         setPatternList();
         setAdjacencyList();
+        initGame();
 
 
         // load the soundpool
@@ -138,6 +118,8 @@ public class ScroggleGameFragment extends Fragment {
                 inflater.inflate(R.layout.wordgame_large_board, container, false);
 
         initViews(rootView);
+        generateRandomWords();
+        fillboards();
         loadScores();
         updateAllTiles();
 
@@ -278,11 +260,24 @@ public class ScroggleGameFragment extends Fragment {
                 if (!phaseTwo) {
 
                     v.setText("");
-                    if (DoneTiles.size() != 0) {
+                    if (finishedtiles >= 3) {
                         v1.setText("Phase two begins..");
                         RunAnimation(v1);
+                        clearMoves();
                         setPhasetwo();
+                        updateAllTiles();
                     } else {
+                        builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("No enough words for Phase 2!");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton(R.string.ok_label,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                        mDialog = builder.show();
                         gameOver = true;
                         mHandler.removeCallbacks(mRunnable);
                         clearAvailable();
@@ -307,44 +302,24 @@ public class ScroggleGameFragment extends Fragment {
         mAvailable.clear();
     }
 
-    private void addAvailable(ScroggleTile tile) {
-        mAvailable.add(tile);
-    }
-
     private void setPhasetwo() {
         t = 90;
-        atLeastOneClicked = false;
         getCounter();
         phaseTwo = true;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 ScroggleTile tile = mSmallTiles[i][j];
-                if (DoneTiles.contains(i)) {
+                if (!tile.getText().equals(" ") && tile.getOwner() == ScroggleTile.Owner.TAKEN) {
                     tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                    addAvailable(tile);
-                    tile.updateDrawableState('a', 0);
                 } else {
-                    tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                    tile.updateDrawableState(' ', 1);
+                    tile.setOwner(ScroggleTile.Owner.NA);
+                    tile.setText(" ");
                 }
-
-                if (((Button) tile.getView()).getText().toString().charAt(0) == ' ') {
-                    // Log.d("Yes ", "it came");
-                    if (mAvailable.contains(tile)) {
-                        mAvailable.remove(tile);
-                    }
-
-                } else {
-                    if (!mAvailable.contains(tile)) {
-                        addAvailable(tile);
-                    }
-                }
-
             }
         }
-
-
     }
+
+
 
     private void setAdjacencyList() {
         //block #0
@@ -400,11 +375,6 @@ public class ScroggleGameFragment extends Fragment {
         patternList.add(new int[]{4, 0, 1, 3, 6, 7, 8, 5, 2});
     }
 
-    public boolean isAvailable(ScroggleTile tile) {
-        return mAvailable.contains(tile);
-    }
-
-
     private void loadScores() {
 
         score.put("A", 1);
@@ -446,7 +416,6 @@ public class ScroggleGameFragment extends Fragment {
     }
 
 
-
     private void initViews(View rootView) {
 
         mEntireBoard.setView(rootView);
@@ -467,15 +436,11 @@ public class ScroggleGameFragment extends Fragment {
                     public void onClick(View view) {
                         smallTile.animate();
                         totalClicks++;
-
-                        if (isAvailable(smallTile) && (!gameOver)) {
+                        if (smallTile.getOwner() == ScroggleTile.Owner.AVAILABLE && (!gameOver)) {
                             mSoundPool.play(mSoundClick, mVolume, mVolume, 1, 0, 1f);
-
-                            makeMove(fLarge, fSmall); //makes the move and sets available the corresponding tile
+                            makeMove(fLarge, fSmall);
+                            getButtonText(smallTile);
                             touchedLargeTile = fLarge;
-                            touchedSmallTiles[fSmall] = fSmall + 1;
-                            getButtonText(smallTile); //put button letter to string
-
                         } else {
                             mSoundPool.play(mSoundMiss, mVolume, mVolume, 1, 0, 1f);
                         }
@@ -483,8 +448,60 @@ public class ScroggleGameFragment extends Fragment {
                 });
             }
         }
+    }
 
+    private void makeMove(int large, int small) {
+        mLastLarge = large;
+        mLastSmall = small;
+        ScroggleTile smallTile = mSmallTiles[large][small];
+        ScroggleTile largeTile = mLargeTiles[large];
+        smallTile.setOwner(ScroggleTile.Owner.CLICKED);
+        if (!phaseTwo) {
+            done = false;
+            setNextAvailable1(large, small);
+        }
+        if (phaseTwo) {
+            setNextAvailable2(large, small);
+        }
+        updateAllTiles();
+    }
 
+    //if tile is on the adjacencylist
+    private boolean contains(int[] a, int i) {
+        for (int x : a) {
+            if (x == i) return true;
+        }
+        return false;
+    }
+
+    //Phase one set available
+    private void setNextAvailable1(int lastlarge, int lastsmall) {
+        int[] list = adjacencyList.get(lastsmall);
+        for (int large = 0; large < 9; large++) {
+            for (int small = 0; small < 9; small++) {
+                ScroggleTile tile = mSmallTiles[large][small];
+                if (large != lastlarge) {
+                    if (tile.getOwner() != ScroggleTile.Owner.TAKEN)
+                        tile.setOwner(ScroggleTile.Owner.FROZEN);
+                } else {
+                    if (contains(list, small) && tile.getOwner() != ScroggleTile.Owner.CLICKED) {
+                        tile.setOwner(ScroggleTile.Owner.FROZEN);
+                    } else {
+                        if (tile.getOwner() != ScroggleTile.Owner.CLICKED)
+                            tile.setOwner(ScroggleTile.Owner.AVAILABLE);
+                    }
+                }
+            }
+        }
+    }
+
+    //Phase two set availableTile
+    private void setNextAvailable2(int lastlarge, int lastmall) {
+        for (int small = 0; small < 9; small++) {
+            ScroggleTile tile = mSmallTiles[lastlarge][small];
+            if (tile.getOwner() == ScroggleTile.Owner.AVAILABLE)
+                tile.setOwner(ScroggleTile.Owner.FROZEN);
+        }
     }
 
     private void getButtonText(ScroggleTile smallTile) {
@@ -505,7 +522,7 @@ public class ScroggleGameFragment extends Fragment {
     private void donePressed() {
 
         //Need at least three letters
-        if (enteredStringSroggle.length() < 2) {
+        if (enteredStringSroggle.length() < 3) {
             builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Need at least 3 letters!");
             builder.setCancelable(false);
@@ -517,192 +534,92 @@ public class ScroggleGameFragment extends Fragment {
                         }
                     });
             mDialog = builder.show();
+            clearMoves();
+            updateAllTiles();
+            touchedLargeTile = -1;
+            enteredStringSroggle = "";
             return;
-
         }
         // when word is valid
         if (searchWordInMap(enteredStringSroggle)) {
             //Entering text to the screen
             wordsDetectedByUser.put(hashKey++, enteredStringSroggle);
             e.append(enteredStringSroggle + " ");
+            updateScore(enteredStringSroggle, enteredStringSroggle.length());
+            finishedtiles++;
+
+            // PHASE 1
             if (!phaseTwo) {
-                //Clearing off redundant buttons
-                for (int i = 0; i < 9; i++) {
-                    ScroggleTile tile = mSmallTiles[touchedLargeTile][i];
+                for (int small = 0; small < 9; small++) {
+                    ScroggleTile tile = mSmallTiles[touchedLargeTile][small];
                     if (tile.getOwner() != ScroggleTile.Owner.CLICKED) {
-                        //  if (!phaseTwo) {
-                        tile.updateDrawableState(' ', 1);
-                        // }
-                    } else {
-                        int factor = enteredStringSroggle.length();
-                        updateScore(tile, factor);
+                        tile.setText(" ");
                     }
-
+                    tile.setOwner(ScroggleTile.Owner.TAKEN);
                 }
-                setAvailableFromLastMove(touchedLargeTile, 0);
+            }
 
-
-                DoneTiles.add(touchedLargeTile);
-
-
-            } else {
-                //phase two
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        ScroggleTile tile = mSmallTiles[i][j];
+            if (phaseTwo) {
+                for (int large = 0; large < 9; large++) {
+                    for (int small = 0; small < 9; small++) {
+                        ScroggleTile tile = mSmallTiles[large][small];
                         if (tile.getOwner() == ScroggleTile.Owner.CLICKED) {
-                            updateScore(tile, enteredStringSroggle.length());
+                            tile.setOwner(ScroggleTile.Owner.TAKEN);
                         }
+
                     }
                 }
-
             }
-        } else {    //not correct word
-
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    ScroggleTile tile = mSmallTiles[i][j];
-                    if (tile.getOwner() == ScroggleTile.Owner.CLICKED) {
-                        if (!DoneTiles.contains(i)) {
-                            popup = true;
-                        }
-                        atLeastOneClicked = true;
-                    }
-                    if (atLeastOneClicked && popup) break;
-                }
-            }
-            if (atLeastOneClicked) {
-                atLeastOneClicked = false;
-                if (!phaseTwo) {
-                    if (popup) {
-                        popup = false;
-                        e = (TextView) getActivity().findViewById(R.id.wd_wordlist);
-                        // e.a ppend(" ");
-                        ScroggleTile tile = mLargeTiles[touchedLargeTile];
-                        builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Invalid Word");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton(R.string.ok_label,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-                        mDialog = builder.show();
-
-                        // for(int i =0;i<3;i++){
-                        tile.animate();
-
-                        for (int i = 0; i < 9; i++) {
-                            ScroggleTile tiles = mSmallTiles[touchedLargeTile][i];
-                            tiles.setOwner(ScroggleTile.Owner.AVAILABLE);
-                            tiles.updateDrawableState('a', 0);
-                            addAvailable(tiles);
-                        }
-                    }
-                } else {
-                    e = (TextView) getActivity().findViewById(R.id.wd_wordlist);
-                    // e.a ppend(" ");
-                    ScroggleTile tile = mLargeTiles[touchedLargeTile];
-                    builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Invalid Word !");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton(R.string.ok_label,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                }
-                            });
-                    mDialog = builder.show();
-
-                    // for(int i =0;i<3;i++){
-                    // tile.animate();
-                    for (int i = 0; i < 9; i++) {
-                        for (int j = 0; j < 9; j++) {
-                            ScroggleTile tiles = mSmallTiles[i][j];
-                            if (tiles.getOwner() == ScroggleTile.Owner.CLICKED) {
-                                tiles.setOwner(ScroggleTile.Owner.AVAILABLE);
-                            }
-                            tiles.updateDrawableState('a', 0);
-
+            //restore frozen tiles
+            restoreFrozenTiles();
+        } else {
+            builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Invalid Word !");
+            builder.setCancelable(false);
+            builder.setPositiveButton(R.string.ok_label,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
                         }
-                    }
-
-                }
-
-                ;
-                enteredStringSroggle = "";
-
-            }
-
+                    });
+            mDialog = builder.show();
+            clearMoves();
         }
-        if (phaseTwo) {
-
-            for (int i = 0; i < 9; i++) {
-                for (int dest = 0; dest < 9; dest++) {
-                    ScroggleTile tile = mSmallTiles[i][dest];
-                    if (tile.getOwner() == ScroggleTile.Owner.CLICKED) {
-                        tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                        if (mAvailable.contains(tile)) {
-                            mAvailable.remove(tile);
-                        }
-                        tile.updateDrawableState(' ', 1);
-                    } else {
-                        if (((Button) mSmallTiles[i][dest].getView()).getText().charAt(0) == ' ') {
-                            mAvailable.remove(tile);
-                        } else {
-                            addAvailable(tile);
-                        }
-                        tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                        tile.updateDrawableState('a', 0);
-                    }
-                }
-            }
-
-        }
-
-        if (!phaseTwo) {
-            if (touchedLargeTile == 0) {
-                for (int i = 0; i < 9; i++) {
-                    ScroggleTile tiles = mSmallTiles[touchedLargeTile][i];
-                    if ((tiles.getOwner() == ScroggleTile.Owner.AVAILABLE) && (((Button) tiles.getView()).getText().charAt(0) != ' ')) {
-
-                        addAvailable(tiles);
-                    }
-                }
-
-            }
-        }
-        for (int x = 0; x < touchedSmallTiles.length; x++) {
-            touchedSmallTiles[x] = 0;
-        }
-        touchedLargeTile = 0;
+        updateAllTiles();
+        touchedLargeTile = -1;
         enteredStringSroggle = "";
     }
 
-    private void updateScore(ScroggleTile tile, int factor) {
-        //length of the word will be the bonus factor
-        String x = ((Button) tile.getView()).getText().toString();
-        currentScore += (score.get(x)) * factor;
-    }
-
-
-    private void makeMove(int large, int small) {
-        mLastLarge = large;
-        mLastSmall = small;
-        ScroggleTile smallTile = mSmallTiles[large][small];
-        ScroggleTile largeTile = mLargeTiles[large];
-        smallTile.setOwner(ScroggleTile.Owner.CLICKED);
-        if (!phaseTwo) {
-            done = false;
+    private void restoreFrozenTiles() {
+        for (int large = 0; large < 9; large++) {
+            for (int small = 0; small < 9; small++) {
+                ScroggleTile tile = mSmallTiles[large][small];
+                if (tile.getOwner() == ScroggleTile.Owner.FROZEN)
+                    tile.setOwner(ScroggleTile.Owner.AVAILABLE);
+            }
         }
-        setAvailableFromLastMove(large, small); //changed from small to large
-        smallTile.updateDrawableState('a', 0);
+    }
+
+    private void clearMoves() {
+        for (int large = 0; large < 9; large++) {
+            for (int small = 0; small < 9; small++) {
+                ScroggleTile tile = mSmallTiles[large][small];
+                if (tile.getOwner() != ScroggleTile.Owner.TAKEN && tile.getOwner() != ScroggleTile.Owner.NA) {
+                    tile.setOwner(ScroggleTile.Owner.AVAILABLE);
+                }
+            }
+        }
 
     }
+
+    private void updateScore(String word, int factor) {
+        //length of the word will be the bonus factor
+        for (char x : word.toCharArray()) {
+            currentScore += (score.get(String.valueOf(x))) * factor;
+        }
+    }
+
 
     public void restartGame() {
         mSoundPool.play(mSoundRewind, mVolume, mVolume, 1, 0, 1f);
@@ -710,16 +627,16 @@ public class ScroggleGameFragment extends Fragment {
         mHandler.removeCallbacks(mRunnable);
         //mHandler.postDelayed(mRunnable, 1000);
         initGame();
+        initViews(getView());
+        generateRandomWords();
+        fillboards();
         gameOver = false;
         done = false;
         //if(e!=null){
         e.setText("");
         //}
         popup = false;
-        atLeastOneClicked = false;
         currentScore = 0;
-        generateRandomWords();
-        initViews(getView());
         t = 90;
         enteredStringSroggle = "";
         notValidWord = false;
@@ -731,163 +648,6 @@ public class ScroggleGameFragment extends Fragment {
         updateAllTiles();
     }
 
-//    private void setAvailableFromLastMove1(int large, int small) {
-//        clearAvailable();
-//        //large = -1
-//        if (large == -1) {
-//            for (int i = 0; i < 9; i++) {
-//                for (int j = 0; j < 9; j++) {
-//                    ScroggleTile tile = mSmallTiles[i][j];
-//                    mAvailable.add(tile);
-//                }
-//            }
-//            return;
-//        }
-//        //phase one
-//        if (!phaseTwo) {
-//            for (int i = 0; i < 9; i++) {
-//                ScroggleTile tile = mSmallTiles[large][i];
-//                mAvailable.add(tile);
-//            }
-//            int a[] = adjacencyList.get(small);
-//            for (int x : a) {
-//                mAvailable.remove(mSmallTiles[large][x]);
-//            }
-//            return;
-//        }
-//        //phase two
-//        if (phaseTwo) {
-//            for (int i = 0; i < 9; i++) {
-//                if (i != large) {
-//                    for (int j = 0; j < 9; j++) {
-//                        ScroggleTile tile = mSmallTiles[i][j];
-//                        mAvailable.add(tile);
-//                    }
-//                }
-//            }
-//            return;
-//        }
-//    }
-
-    private void setAvailableFromLastMove(int large, int smallx) {
-        clearAvailable();
-        // Make all the tiles at the destination available
-        if (large != -1) {
-            for (int i = 0; i < 9; i++) {
-                for (int dest = 0; dest < 9; dest++) {
-                    if (!phaseTwo) {
-                        if (!done) {
-                            if (i == large) {
-                                ScroggleTile tile = mSmallTiles[large][dest];
-                                if ((tile.getOwner() == ScroggleTile.Owner.AVAILABLE))
-                                    addAvailable(tile);
-
-                                int a[] = adjacencyList.get(smallx);
-                                for (int x : a) {
-                                    mAvailable.remove(mSmallTiles[large][x]);
-                                }
-                            } else {
-                                if (DoneTiles.contains(i)) {
-                                    continue;
-                                }
-                                ScroggleTile tile = mSmallTiles[i][dest];
-                                tile.setOwner(ScroggleTile.Owner.FROZEN);
-                                tile.updateDrawableState('a', 0);
-                            }
-                        } else { //OnDOnePressed
-                            if (DoneTiles.contains(i)) {
-                                continue;
-                            }
-
-                            //  Log.d("Comes ", "Hereeee");
-                            if (i != large) {//Correct answer
-                                ScroggleTile tile = mSmallTiles[i][dest];
-                                tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-                                addAvailable(tile);
-                                tile.updateDrawableState('a', 0);
-                                //done =false;
-                            }
-                        }
-
-
-                    } else {
-
-                        if (i == large) {
-                            if (dest == smallx) {
-                                ScroggleTile tile1 = mSmallTiles[large][dest];
-                                tile1.setOwner(ScroggleTile.Owner.CLICKED);
-                                if (mAvailable.contains(tile1)) {
-                                    mAvailable.remove(tile1);
-                                }
-                                tile1.updateDrawableState('a', 0);
-
-                            } else {
-                                ScroggleTile tile2 = mSmallTiles[large][dest];
-                                if (!(tile2.getOwner() == ScroggleTile.Owner.CLICKED)) {
-
-                                    tile2.setOwner(ScroggleTile.Owner.FROZEN);
-                                }
-                                if (mAvailable.contains(tile2)) {
-                                    mAvailable.remove(tile2);
-                                }
-                                tile2.updateDrawableState('a', 0);
-                            }
-
-
-                        } else {
-
-
-                            ScroggleTile tile3 = mSmallTiles[i][dest];
-                            if (!(tile3.getOwner() == ScroggleTile.Owner.CLICKED)) {
-                                tile3.setOwner(ScroggleTile.Owner.AVAILABLE);
-                            }
-                            //  if(((((Button)mSmallTiles[i][dest].getView()).getText().toString().equals(null))||((Button)mSmallTiles[i][dest].getView()).getText().toString().charAt(0)==' ')||(((Button)mSmallTiles[i][dest].getView()).getText().toString().equals(""))){
-
-                            if ((!mAvailable.contains(tile3)) && (tile3.getView().toString().charAt(0) != ' ')) {
-                                mAvailable.add(tile3);
-                            }
-
-
-                            tile3.updateDrawableState('a', 0);
-
-
-                            ScroggleTile tile = mSmallTiles[i][dest];
-                            if (((Button) mSmallTiles[i][dest].getView()).getText().toString().charAt(0) == ' ') {
-                                // Log.d("Yes ", "it came");
-                                if (mAvailable.contains(tile)) {
-                                    mAvailable.remove(tile);
-                                }
-
-                            } else {
-                                if (!mAvailable.contains(tile)) {
-                                    addAvailable(tile);
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-            }
-        }
-        // If there were none available, make all squares available
-        if (mAvailable.isEmpty() && large == -1) {
-            setAllAvailable();
-        }
-    }
-
-    private void setAllAvailable() {
-        for (int large = 0; large < 9; large++) {
-            for (int small = 0; small < 9; small++) {
-                ScroggleTile tile = mSmallTiles[large][small];
-                if (tile.getOwner() == ScroggleTile.Owner.AVAILABLE)
-                    addAvailable(tile);
-            }
-        }
-
-    }
-
-
     private int choosePatternNumber() {
 
         Random r = new Random();
@@ -895,65 +655,26 @@ public class ScroggleGameFragment extends Fragment {
         return num;
     }
 
-
     private void updateAllTiles() {
         mEntireBoard.updateDrawableState('a', 0);
         for (int large = 0; large < 9; large++) {
-            fillsmallboards(large);
-            ScroggleTile tile = mLargeTiles[large];
-            tile.setOwner(ScroggleTile.Owner.AVAILABLE);
-            DoneTiles.clear();
-
-            tile.updateDrawableState('a', 0);
-
+            mLargeTiles[large].updateDrawableState('a', 0);
+            for (int small = 0; small < 9; small++) {
+                ScroggleTile tile = mSmallTiles[large][small];
+                tile.updateDrawableState('a', 0);
+            }
         }
+        DoneTiles.clear();
     }
 
-    private void fillsmallboards(int large) {
-        int[] position = patternList.get(choosePatternNumber());
-        //test String word = "BLIZZARDS";
-        for (int small = 0; small < 9; small++) {
-            ScroggleTile tile = mSmallTiles[large][position[small]];
-            //tile.updateDrawableState(word.charAt(small),1);
-            tile.updateDrawableState(nineNineLetterWords[large].toUpperCase().charAt(small),1);
-        }
-    }
-
-    private void setAvailableAccordingToGamePhase(boolean phaseTwo, int smallx, int large, HashSet<Integer> DoneTiles) {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                ScroggleTile tile = mSmallTiles[i][j];
-
-                if (phaseTwo) {
-
-                    if (((Button) tile.getView()).getText().charAt(0) == ' ') {
-                        mAvailable.remove(tile);
-
-                    }
-                    if (tile.getOwner() == ScroggleTile.Owner.FROZEN) {
-                        mAvailable.remove(tile);
-                    }
-
-
-                } else {
-
-                    if (tile.getOwner() == ScroggleTile.Owner.FROZEN) {
-                        mAvailable.remove(tile);
-                    }
-
-                    if (i == large) {
-                        int a[] = adjacencyList.get(smallx);
-                        for (int x : a) {
-                            mAvailable.remove(mSmallTiles[large][x]);
-                        }
-
-                    }
-                    if (DoneTiles.size() == 9) {
-                        mAvailable.clear();
-                    }
-
-                }
-
+    private void fillboards() {
+        for (int large = 0; large < 9; large++) {
+            int[] position = patternList.get(choosePatternNumber());
+            //test String word = "BLIZZARDS";
+            for (int small = 0; small < 9; small++) {
+                ScroggleTile tile = mSmallTiles[large][position[small]];
+                //tile.updateDrawableState(word.charAt(small),1);
+                tile.updateDrawableState(nineNineLetterWords[large].toUpperCase().charAt(small), 1);
             }
         }
     }
@@ -973,8 +694,6 @@ public class ScroggleGameFragment extends Fragment {
             builder.append(wordsDetectedByUser.get(i));
             builder.append(',');
         }
-        builder.append(notValidWord);
-        builder.append(',');
         //   m1Handler.removeCallbacks(m1Runnable);
         mHandler.removeCallbacks(mRunnable);
         builder.append(phaseTwo);
@@ -983,13 +702,6 @@ public class ScroggleGameFragment extends Fragment {
         builder.append(',');
         builder.append(t); //storing timer state
         builder.append(',');
-        Object a[] = DoneTiles.toArray();
-        builder.append(a.length);
-        builder.append(',');
-        for (int i = 0; i < a.length; i++) {
-            builder.append(a[i].toString());
-            builder.append(',');
-        }
         builder.append(mLastLarge);
         builder.append(',');
         builder.append(mLastSmall);
@@ -998,11 +710,12 @@ public class ScroggleGameFragment extends Fragment {
             for (int small = 0; small < 9; small++) {
                 builder.append(mSmallTiles[large][small].getOwner().name());
                 builder.append(',');
-                builder.append((((Button) mSmallTiles[large][small].getView()).getText()).toString());
+                builder.append(mSmallTiles[large][small].getText());
                 builder.append(',');
-                //Log.d(DoneTiles);
             }
         }
+        builder.append(enteredStringSroggle);
+        builder.append(',');
         return builder.toString();
     }
 
@@ -1011,49 +724,30 @@ public class ScroggleGameFragment extends Fragment {
      */
     public void putState(String gameData) {
         String[] fields = gameData.split(",");
-        //setPhaseTwoLogic();
         int index = 0;
-
         muteClicked = Boolean.parseBoolean(fields[index++]);
-
         gameOver = Boolean.parseBoolean(fields[index++]);
-
-
         int size = Integer.parseInt(fields[index++]);
         e = (TextView) getActivity().findViewById(R.id.wd_wordlist);
-
         e.setText("");
-
         for (int i = 0; i < size; i++) {
-
             wordsDetectedByUser.put(i, fields[index++]);
-
             e.append(wordsDetectedByUser.get(i) + " ");
-
         }
-        notValidWord = Boolean.parseBoolean(fields[index++]);
         phaseTwo = Boolean.parseBoolean(fields[index++]);
-
-
         currentScore = Integer.parseInt(fields[index++]);
         t = Integer.parseInt(fields[index++]);
-        int length = Integer.parseInt((fields[index++]));
-        int a[] = new int[length];
-        for (int i = 0; i < length; i++) {
-            a[i] = Integer.parseInt(fields[index++]);
-            DoneTiles.add(a[i]);
-        }
-
         mLastLarge = Integer.parseInt(fields[index++]);
         mLastSmall = Integer.parseInt(fields[index++]);
         for (int large = 0; large < 9; large++) {
             for (int small = 0; small < 9; small++) {
                 ScroggleTile.Owner owner = ScroggleTile.Owner.valueOf(fields[index++]);
                 mSmallTiles[large][small].setOwner(owner);
-                mSmallTiles[large][small].updateDrawableState(fields[index++].charAt(0), 1);
+                mSmallTiles[large][small].setText(fields[index++]);
             }
         }
-        setAvailableAccordingToGamePhase(phaseTwo, mLastSmall, mLastLarge, DoneTiles);
+        enteredStringSroggle = fields[index++];
+        updateAllTiles();
 
     }
 
@@ -1075,7 +769,6 @@ public class ScroggleGameFragment extends Fragment {
         // If the player moves first, set which spots are available
         mLastSmall = -1;
         mLastLarge = -1;
-        setAvailableFromLastMove(mLastLarge, mLastSmall);
     }
 }
 

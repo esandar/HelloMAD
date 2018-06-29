@@ -21,13 +21,14 @@ import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 public class ScroggleTile {
 
     public enum Owner {
-        CLICKED, AVAILABLE, FROZEN, BLANK
+        CLICKED, AVAILABLE, FROZEN, TAKEN, NA
     }
     //Define drawable definition
-    private static final int LEVEL_AVAILABLE = 0;
-    private static final int LEVEL_CLICKED = 1;
-    private static final int LEVEL_FROZEN = 2;
-    private static final int LEVEL_BLANK = 2;
+    private static final int LEVEL_AVAILABLE = 1; //green
+    private static final int LEVEL_CLICKED = 3; //blue
+    private static final int LEVEL_FROZEN = 2; //red
+    private static final int LEVEL_TAKEN = 0; //grey
+    private static final int LEVEL_NA = 0; //grey
 
 
     private final ScroggleGameFragment mGame;
@@ -87,7 +88,16 @@ public class ScroggleTile {
         }
     }
 
+    public String getText() {
+        Button b = (Button) mView;
+        return b.getText().toString();
+    }
 
+    public void setText(String a) {
+        Button b = (Button) mView;
+        b.setText(String.valueOf(a));
+
+    }
     public void updateDrawableState(char a, int x) {
         if (mView == null) return;
         int level = getLevel();
@@ -103,7 +113,7 @@ public class ScroggleTile {
     }
 
     private int getLevel() {
-        int level = LEVEL_BLANK;
+        int level = LEVEL_TAKEN;
         switch (mOwner) {
             case AVAILABLE:
                 level = LEVEL_AVAILABLE;
@@ -113,6 +123,9 @@ public class ScroggleTile {
                 break;
             case FROZEN:
                 level = LEVEL_FROZEN;
+                break;
+            case NA:
+                level = LEVEL_NA;
                 break;
         }
         return level;

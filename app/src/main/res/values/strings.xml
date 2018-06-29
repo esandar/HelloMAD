@@ -35,14 +35,23 @@
         both sides in the larger game.
     </string>
     <string name="scroggle_ack">
-        Thanks for Chenxi Zhao for giving suggestion on the algorithm.\n\
+        Thanks to Chenxi Zhao for giving suggestion on the algorithm. \n\
+        Credit to Tencent Games for the Doudizhu background music.
     </string>
     <string name="wd_ins">
-        This game has two phases. In the first 90 seconds, you have to select 9 words from 9 of the
-        3x3 grids. You have to finish one grid before moving to others. The word has to have more than three letters.
+        This game has two phases. In the first 90 seconds, you have to select one word
+        from each small board, total nine words. You have to finish one board before moving to others.
+        The word has to have more than three letters.
         You need to click to submit your choice.\n\
-        When you finish 9 selections or the time is up, you will move to the next phase.
-        You can only select one from all available letters in each big grid to make a new word. Try to make as many
+        If you do not pick at least three words. The game will not enter Phase 2 due to lack of selection (Dialogue will pop up). \n\
+        Otherwise when time is up, you will move to the next phase.
+        In Phase #2, you will have another 90 seconds. You can only select one from each small board.Try to make as many words
         as you can within the time limit.\n\
+        GREEN tiles are the available ones you can make a valid move.\n\
+        RED tiles are frozen which you cannot make a valid move.\n\
+        BLUE tiles shows the letters you already pick.\n\
+        GREY tiles are the inactive ones which you have done with.\n\
+        Enjoy the game!
+
     </string>
 </resources>
