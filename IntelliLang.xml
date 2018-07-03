@@ -1,0 +1,8 @@
+<application>
+  <component name="LanguageInjectionConfiguration">
+    <injection language="JSON" injector-id="xml">
+      <display-name>Button/@onClick</display-name>
+      <place><![CDATA[xmlAttribute().withLocalName(string().equalTo("onClick")).withNamespace(string().equalTo("http://schemas.android.com/apk/res/android")).withParent(xmlTag().withLocalName(string().equalTo("Button")))]]></place>
+    </injection>
+  </component>
+</application>
