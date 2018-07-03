@@ -11,7 +11,6 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 

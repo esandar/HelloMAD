@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
-public class ScroggleStatus extends Activity{
+public class ScroggleStatus extends Activity {
 
     private TextView t1;
     private TextView t2;
@@ -31,12 +30,12 @@ public class ScroggleStatus extends Activity{
         t1.setText("GAME OVER");
         t2.setText("Found Words");
         try {
-            t3.setText(ScroggleGameFragment.e.getText().toString()+"\n");
-        }catch(NullPointerException e){
+            t3.setText(ScroggleGameFragment.e.getText().toString() + "\n");
+        } catch (NullPointerException e) {
 
         }
-            t4.setText("Total Score\n"+String.valueOf(ScroggleGameFragment.currentScore)+"\n");
-      // t5.setText("Total Valid Clicks\n"+String.valueOf(ScroggleGameFragment.totalClicks));
+        t4.setText("Total Score\n" + String.valueOf(ScroggleGameFragment.currentScore) + "\n");
+        // t5.setText("Total Valid Clicks\n"+String.valueOf(ScroggleGameFragment.totalClicks));
 
 
     }
@@ -50,4 +49,5 @@ public class ScroggleStatus extends Activity{
         intent.putExtra(ScroggleGameActivity.KEY_RESTORE, true);
         //startActivity(intent);
     }
+
 }

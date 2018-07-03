@@ -26,6 +26,22 @@
         <activity android:name=".Scroggle.ScroggleGameActivity" />
         <activity android:name=".Scroggle.ScroggleMainActivity" />
         <activity android:name=".Scroggle.ScroggleStatus" />
+        <activity android:name=".Scroggle.Leaderboard" />
+        <activity android:name=".Scroggle.UserActivity" />
+        <activity android:name=".Scroggle.Scoreboard"   />
+
+
+    <service android:name=".FCM.WordGameInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FCM.WordGameMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -12,7 +12,7 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +39,9 @@ public class ScroggleMainFragment extends Fragment {
         View quitButton = rootView.findViewById(R.id.bt_wg_exit);
         View ackButton = rootView.findViewById(R.id.bt_wg_ack);
         View howToPlayButton = rootView.findViewById(R.id.bt_wg_instruction);
+        View scoreboardButton = rootView.findViewById(R.id.bt_wg_scoreboard);
+        View leaderboardButton = rootView.findViewById(R.id.bt_wg_leaderboard);
+        View switchuserButton = rootView.findViewById((R.id.bt_wg_user));
 
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,27 @@ public class ScroggleMainFragment extends Fragment {
             }
 
 
+        });
+        switchuserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UserActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Leaderboard.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        scoreboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Scoreboard.class);
+                getActivity().startActivity(intent);
+            }
         });
 
         ackButton.setOnClickListener(new View.OnClickListener() {

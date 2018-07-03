@@ -42,6 +42,30 @@
         android:text="New Game"/>
 
     <Button
+        android:id="@+id/bt_wg_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/menu_button_margin"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Switch User"/>
+
+    <Button
+        android:id="@+id/bt_wg_scoreboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/menu_button_margin"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Scoreboard"/>
+
+    <Button
+        android:id="@+id/bt_wg_leaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/menu_button_margin"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Leaderboard"/>
+
+    <Button
         android:id="@+id/bt_wg_instruction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

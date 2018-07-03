@@ -1,19 +1,17 @@
 package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
+
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
 import static chenliu.madcourse.neu.edu.numad18s_chenliu.R.raw.background_mansu;
-import static chenliu.madcourse.neu.edu.numad18s_chenliu.R.raw.background_wg;
+
 
 
 public class ScroggleGameActivity extends Activity {

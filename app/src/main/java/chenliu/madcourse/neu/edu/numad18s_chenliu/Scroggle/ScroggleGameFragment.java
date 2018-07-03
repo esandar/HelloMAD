@@ -637,13 +637,14 @@ public class ScroggleGameFragment extends Fragment {
         //}
         popup = false;
         currentScore = 0;
-        t = 90;
+        t = 20;
         enteredStringSroggle = "";
         notValidWord = false;
         phaseTwo = false;
         hashKey = 0;
         wordsDetectedByUser.clear();
         mHandler.postDelayed(mRunnable, 1000);
+        finishedtiles = 0;
 
         updateAllTiles();
     }

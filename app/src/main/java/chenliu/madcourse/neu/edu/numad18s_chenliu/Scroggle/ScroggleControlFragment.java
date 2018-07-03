@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
-import chenliu.madcourse.neu.edu.numad18s_chenliu.UTTT.GameActivity;
+
 
 public class ScroggleControlFragment extends Fragment {
 
