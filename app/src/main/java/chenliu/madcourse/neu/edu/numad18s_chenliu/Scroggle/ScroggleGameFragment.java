@@ -35,8 +35,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.DAOS.GameDao;
+import chenliu.madcourse.neu.edu.numad18s_chenliu.DAOS.UserDao;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+import chenliu.madcourse.neu.edu.numad18s_chenliu.models.Game;
+import chenliu.madcourse.neu.edu.numad18s_chenliu.models.User;
 
 
 public class ScroggleGameFragment extends Fragment {
@@ -56,7 +60,11 @@ public class ScroggleGameFragment extends Fragment {
     private float mVolume = 1f;
     private int mLastLarge;
     private int mLastSmall;
-
+    private User user;
+    private UserDao userDao;
+    private Game game;
+    private String gameFirebaseKey;
+    private GameDao gameDao;
     private String enteredStringSroggle = "";
     private Button pause;
     private Button doneView;
@@ -100,6 +108,10 @@ public class ScroggleGameFragment extends Fragment {
         setRetainInstance(true);
         setPatternList();
         setAdjacencyList();
+        user = new User();
+        userDao = new UserDao();
+        userDao.addUser(user);
+        gameDao = new GameDao();
         initGame();
 
 
@@ -281,6 +293,8 @@ public class ScroggleGameFragment extends Fragment {
                         gameOver = true;
                         mHandler.removeCallbacks(mRunnable);
                         clearAvailable();
+                        game.setScore(currentScore);
+                        gameDao.updateGame(game, gameFirebaseKey);
                         Intent i = new Intent(getActivity(), ScroggleStatus.class);
                         getActivity().startActivity(i);
                     }
@@ -289,6 +303,8 @@ public class ScroggleGameFragment extends Fragment {
                     mHandler.removeCallbacks(mRunnable);
                     clearAvailable();
                     phaseTwo = false;
+                    game.setScore(currentScore);
+                    gameDao.updateGame(game, gameFirebaseKey);
                     Intent i = new Intent(getActivity(), ScroggleStatus.class);
                     getActivity().startActivity(i);
                 }
@@ -770,6 +786,8 @@ public class ScroggleGameFragment extends Fragment {
         // If the player moves first, set which spots are available
         mLastSmall = -1;
         mLastLarge = -1;
+        game = new Game(currentScore);
+        gameFirebaseKey = gameDao.addGame(game);
     }
 }
 

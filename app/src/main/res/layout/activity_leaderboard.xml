@@ -12,12 +12,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/leaderboard_firstplace"
+            android:id="@+id/leaderboard_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:text="Leaderboard"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,22 +26,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/bt_kudos"
+            android:id="@+id/bt_subscribe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Congrats Message" />
+            android:text="Subscribe to Notification" />
 
-        <TextView
-            android:id="@+id/leaderboard_scores"
+        <ListView
+            android:id="@+id/leaderboard_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 

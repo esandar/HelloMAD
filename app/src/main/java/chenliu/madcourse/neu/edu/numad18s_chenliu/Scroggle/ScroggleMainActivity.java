@@ -12,6 +12,10 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +23,11 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.FCM.FCMActivity;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+
+import static android.content.ContentValues.TAG;
 
 public class ScroggleMainActivity extends Activity {
     public MediaPlayer mMediaPlayer;
@@ -30,6 +37,8 @@ public class ScroggleMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordgame_activity_main);
+
+
         //Load dictionary
         if (GlobalClass.list.isEmpty()) {
             InputStream strF = null;

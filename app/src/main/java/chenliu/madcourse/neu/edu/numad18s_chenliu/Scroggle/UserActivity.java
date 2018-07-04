@@ -16,41 +16,53 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.DAOS.UserDao;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+import chenliu.madcourse.neu.edu.numad18s_chenliu.models.User;
 
 public class UserActivity extends AppCompatActivity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    String token = FirebaseInstanceId.getInstance().getToken();
-    DatabaseReference mynameRef = database.getReference("users").child(token);
+    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        final EditText editText = findViewById(R.id.nameedit);
-        Button submitButton = findViewById(R.id.submitname);
 
+        userDao = new UserDao();
+        final EditText editText = findViewById(R.id.change_name_edit_text);
+        Button submitButton = findViewById(R.id.change_name_submit_button);
+
+        DatabaseReference userDbRef = UserDao.getUserDbRef();
+        userDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user =  dataSnapshot.getValue(User.class);
+                if (user != null) {
+                    editText.setText(user.getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mynameRef == null) {
-                    database.getReference("users").setValue(token);
-                    User user = new User();
-                    user.setName(editText.toString());
-                    mynameRef = database.getReference("users").child(token);
-                    mynameRef.setValue(user);
-                }
+                User user = new User(editText.getText().toString());
+                userDao.addUser(user);
                 Toast toast = Toast.makeText(
                         UserActivity.this,
-                        "User registered successfully!",
-                        Toast.LENGTH_LONG
+                        "User name updated successfully!",
+                        Toast.LENGTH_SHORT
                 );
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
         });
-    }
 
+    }
 }

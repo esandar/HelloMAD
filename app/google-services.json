@@ -8,37 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1005759679995:android:012f1ce8562cf64b",
-        "android_client_info": {
-          "package_name": "chenliu.madcourse.neu.edu.numad18s_chenliu"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1005759679995-ekq32ui5dgk2s6h6kdpblbe99uk449rg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyADNfXjEdtjI_7g74q5nt-JFzfTlGWkSG4"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1005759679995:android:2bbfc101e7f77289",
         "android_client_info": {
           "package_name": "edu.neu.madcourse.chenliu.mad18s_chenliu"

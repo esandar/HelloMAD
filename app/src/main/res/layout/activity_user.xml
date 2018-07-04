@@ -7,28 +7,29 @@
     tools:context="chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle.UserActivity">
 
     <EditText
-        android:id="@+id/nameedit"
+        android:id="@+id/change_name_edit_text"
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Type your name"
+        android:hint="type name"
         android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/submitname"
+        android:id="@+id/change_name_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Switch User"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameedit" />
+        app:layout_constraintTop_toBottomOf="@+id/change_name_edit_text" />
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -11,6 +11,8 @@
         Learnt how to extract hashmap to a file, reference:https://stackoverflow.com/questions/12747946/how-to-write-and-read-a-file-with-a-hashmap.
         \n\
     </string>
+    <string name="msg_subscribed">Subscribed to news topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="dic_act">Dictionary</string>
     <string name="gen_error">Generate Error</string>
     <string name="wordgame_label">WordGame: Scroggle</string>
