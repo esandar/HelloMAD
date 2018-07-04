@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1005759679995-bccgc04dkoca790thpg6i6ftf4kjec29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.neu.madcourse.chenliu.mad18s_chenliu",
+            "certificate_hash": "75fe2614bc99bb3237ec032c70e4c152dee7ed33"
+          }
+        },
+        {
           "client_id": "1005759679995-ekq32ui5dgk2s6h6kdpblbe99uk449rg.apps.googleusercontent.com",
           "client_type": 3
         }

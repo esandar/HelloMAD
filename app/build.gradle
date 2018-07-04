@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     defaultConfig {
         applicationId 'edu.neu.madcourse.chenliu.mad18s_chenliu'
-        minSdkVersion 24
-        targetSdkVersion 27
-        versionCode 9
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 10
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

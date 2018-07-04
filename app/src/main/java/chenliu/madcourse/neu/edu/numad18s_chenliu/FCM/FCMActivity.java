@@ -3,6 +3,8 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.FCM;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -85,14 +87,14 @@ public class FCMActivity extends AppCompatActivity {
         JSONObject jNotification = new JSONObject();
         try {
             jNotification.put("message", "New Leader!");
-            jNotification.put("body", "New Leader");
+            jNotification.put("body", "New score leader");
             jNotification.put("sound", "default");
             jNotification.put("badge", "1");
 
 
             // Populate the Payload object.
             // Note that "to" is a topic, not a token representing an app instance
-            jPayload.put("to", "/topics/news");
+            jPayload.put("to", "/topics/Scroggle");
             jPayload.put("priority", "high");
             jPayload.put("notification", jNotification);
 
@@ -100,7 +102,7 @@ public class FCMActivity extends AppCompatActivity {
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", SERVER_KEY);
+            conn.setRequestProperty("Authorization", "key=AAAA6ivyzfs:APA91bF9YxFW98GFwXH6jB5pKvMmG5inlsThtHV10pM9MjBmIpposwi_2gqpOSwpQtVx7MfLCWy9GxzERlMfXpmZWaLULqBPoRcNZGjrz5TpMpIbSKmNSTRfE46vcev5ukVFCbSs9H_r");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
@@ -148,7 +150,7 @@ public class FCMActivity extends AppCompatActivity {
         JSONObject jNotification = new JSONObject();
         try {
             jNotification.put("title", "Congrats");
-            jNotification.put("body", "Hi from me :) ");
+            jNotification.put("body", "Congrats for your score :) ");
             jNotification.put("sound", "default");
             jNotification.put("badge", "1");
             /*
@@ -185,7 +187,7 @@ public class FCMActivity extends AppCompatActivity {
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", SERVER_KEY);
+            conn.setRequestProperty("Authorization", "key=AAAA6ivyzfs:APA91bF9YxFW98GFwXH6jB5pKvMmG5inlsThtHV10pM9MjBmIpposwi_2gqpOSwpQtVx7MfLCWy9GxzERlMfXpmZWaLULqBPoRcNZGjrz5TpMpIbSKmNSTRfE46vcev5ukVFCbSs9H_r");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
@@ -197,6 +199,15 @@ public class FCMActivity extends AppCompatActivity {
             // Read FCM response.
             InputStream inputStream = conn.getInputStream();
             final String resp = convertStreamToString(inputStream);
+
+//            Handler h = new Handler(Looper.getMainLooper());
+//            h.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.e(TAG, "run: " + resp);
+//                    Toast.makeText(FCMActivity.this,resp,Toast.LENGTH_LONG).show();
+//                }
+//            });
 
         } catch (JSONException | IOException e) {
             e.printStackTrace();
