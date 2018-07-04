@@ -653,7 +653,7 @@ public class ScroggleGameFragment extends Fragment {
         //}
         popup = false;
         currentScore = 0;
-        t = 20;
+        t = 90;
         enteredStringSroggle = "";
         notValidWord = false;
         phaseTwo = false;
