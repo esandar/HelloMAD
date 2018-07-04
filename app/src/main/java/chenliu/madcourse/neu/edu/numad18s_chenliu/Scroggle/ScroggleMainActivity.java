@@ -37,7 +37,15 @@ public class ScroggleMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordgame_activity_main);
+        // Subscribe to cloud messaging
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic("Scroggle");
+        // [END subscribe_topics]
 
+        // Log and toast
+        String msg = getString(R.string.msg_subscribed);
+        Log.d(TAG, msg);
+        Toast.makeText(ScroggleMainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
         //Load dictionary
         if (GlobalClass.list.isEmpty()) {
