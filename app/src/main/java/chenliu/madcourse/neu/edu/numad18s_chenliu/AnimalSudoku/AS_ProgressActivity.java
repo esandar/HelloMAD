@@ -20,27 +20,30 @@ public class AS_ProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.as_activity_progress);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("progress", MODE_PRIVATE);
-        int zooProgress_4x4 = sharedPreferences.getInt(
+        SharedPreferences progressPref = getSharedPreferences("progress", MODE_PRIVATE);
+        int zooProgress_4x4 = progressPref.getInt(
                 AS_GameActivity.THEME_ZOO + "_" + AS_GameActivity.DIFFICULTY_EASY,
                 0
         );
-        int zooProgress_9x9 = sharedPreferences.getInt(
+        int zooProgress_9x9 = progressPref.getInt(
                 AS_GameActivity.THEME_ZOO + "_" + AS_GameActivity.DIFFICULTY_HARD,
                 0
         );
-        int aquariumProgress_4x4 = sharedPreferences.getInt(
+        int aquariumProgress_4x4 = progressPref.getInt(
                 AS_GameActivity.THEME_AQUARIUM + "_" + AS_GameActivity.DIFFICULTY_EASY,
                 0
         );
-        int aquariumProgress_9x9 = sharedPreferences.getInt(
+        int aquariumProgress_9x9 = progressPref.getInt(
                 AS_GameActivity.THEME_AQUARIUM + "_" + AS_GameActivity.DIFFICULTY_HARD,
                 0
         );
-        int birdHabitatProgress_4x4 = sharedPreferences.getInt(
+        int birdHabitatProgress_4x4 = progressPref.getInt(
                 AS_GameActivity.THEME_BIRD_HABITAT + "_" + AS_GameActivity.DIFFICULTY_EASY,
                 0
         );
+
+        SharedPreferences configPref = getSharedPreferences("config", MODE_PRIVATE);
+        boolean isCheat = configPref.getBoolean("cheat", false);
 
         // Zoo is always active
         TextView zooLabel = findViewById(R.id.zoo_label);
@@ -48,30 +51,30 @@ public class AS_ProgressActivity extends AppCompatActivity {
 
         // Aquarium is active only if Zoo 9x9 has been finished 3 times
         TextView aquariumLabel = findViewById(R.id.aquarium_label);
-        if (zooProgress_9x9 >= 3) {
+        if (isCheat || zooProgress_9x9 >= 3) {
             aquariumLabel.setBackgroundColor(getResources().getColor(R.color.red_color));
         }
 
         // Aquarium is active only if Aquarium 9x9 has been finished 3 times
         TextView birdHabitatLabel = findViewById(R.id.bird_habitat_label);
-        if (aquariumProgress_9x9 >= 3) {
+        if (isCheat || aquariumProgress_9x9 >= 3) {
             birdHabitatLabel.setBackgroundColor(getResources().getColor(R.color.red_color));
         }
 
         for (int i = 0; i < 9; i++) {
-            ASTile zooTile = zooProgress_4x4 + 4 < i + 1
+            ASTile zooTile = !isCheat && zooProgress_4x4 + 4 < i + 1
                             ? new ASTile(i + 1, ASTile.status.LOCKED)       // not collected
                             : new ASTile(i + 1, ASTile.status.FILLED_FAIL); // collected
             zooTile.setView(findViewById(mIconIds[i]));
             zooTile.updateDrawableState();
 
-            ASTile aquariumTile = zooProgress_9x9 < 3 || aquariumProgress_4x4 + 4 < i + 1
+            ASTile aquariumTile = !isCheat && (zooProgress_9x9 < 3 || aquariumProgress_4x4 + 4 < i + 1)
                     ? new ASTile(i + 10, ASTile.status.LOCKED)              // not collected
                     : new ASTile(i + 10, ASTile.status.FILLED_FAIL);        // collected
             aquariumTile.setView(findViewById(mIconIds[i + 9]));
             aquariumTile.updateDrawableState();
 
-            ASTile birdHabitatTile = aquariumProgress_9x9 < 3 || birdHabitatProgress_4x4 + 4 < i + 1
+            ASTile birdHabitatTile = !isCheat && (aquariumProgress_9x9 < 3 || birdHabitatProgress_4x4 + 4 < i + 1)
                     ? new ASTile(i + 19, ASTile.status.LOCKED)              // not collected
                     : new ASTile(i + 19, ASTile.status.FILLED_FAIL);        // collected
             birdHabitatTile.setView(findViewById(mIconIds[i + 18]));

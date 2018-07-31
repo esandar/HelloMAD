@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class AS_MainFragment extends Fragment {
@@ -36,31 +39,41 @@ public class AS_MainFragment extends Fragment {
         // Handle buttons here...
         View newButton = rootView.findViewById(R.id.bt_as_newgame);
         View progressButton = rootView.findViewById(R.id.bt_as_progress);
-        View cheatButton = rootView.findViewById(R.id.bt_as_cheat);
+        final Button cheatButton = rootView.findViewById(R.id.bt_as_cheat);
+        SharedPreferences configPref = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+        boolean isCheat = configPref.getBoolean("cheat", false);
+        cheatButton.setText(isCheat ? "Uncheat" : "Cheat");
+
         View ackButton = rootView.findViewById(R.id.bt_as_ack);
         View howToPlayButton = rootView.findViewById(R.id.bt_as_instruction);
         View aboutButton = rootView.findViewById(R.id.bt_as_about);
 
         newButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AS_GameActivity.class);
                 getActivity().startActivity(intent);
             }
-
         });
+
         progressButton.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AS_ProgressActivity.class);
                 getActivity().startActivity(intent);
-
             }
+        });
 
-
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences configPref = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+                boolean isCheat = configPref.getBoolean("cheat", false);
+                SharedPreferences.Editor editor = configPref.edit();
+                editor.putBoolean("cheat", !isCheat);
+                editor.commit();
+                cheatButton.setText(isCheat ? "Cheat" : "Uncheat");
+            }
         });
 
         ackButton.setOnClickListener(new View.OnClickListener() {

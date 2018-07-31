@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/menu_button_padding"
-        android:text="Cheat"/>
+        android:text=""/>
 
     <Button
         android:id="@+id/bt_as_instruction"
