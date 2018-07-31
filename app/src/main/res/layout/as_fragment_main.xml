@@ -1,0 +1,72 @@
+<!--
+ ! Excerpted from "Hello, Android",
+ ! published by The Pragmatic Bookshelf.
+ ! Copyrights apply to this code. It may not be used to create training material,
+ ! courses, books, articles, and the like. Contact us if you are in doubt.
+ ! We make no guarantees that this code is fit for any purpose.
+ ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/uttt_menu_background"
+    android:elevation="@dimen/elevation_high"
+    android:orientation="vertical"
+    android:padding="@dimen/menu_padding"
+    tools:context=".AnimalSudoku.AS_MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/as_name"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/bt_as_newgame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/menu_button_margin"
+        android:padding="@dimen/menu_button_padding"
+        android:text="New Game"/>
+
+    <Button
+        android:id="@+id/bt_as_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Progress"/>
+
+    <Button
+        android:id="@+id/bt_as_cheat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Cheat"/>
+
+    <Button
+        android:id="@+id/bt_as_instruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/menu_button_padding"
+        android:text="How To Play"/>
+
+    <Button
+        android:id="@+id/bt_as_ack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Acknowledgement"/>
+
+    <Button
+        android:id="@+id/bt_as_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/menu_button_padding"
+        android:text="About"/>
+
+</LinearLayout>

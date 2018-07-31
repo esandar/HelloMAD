@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/small_board_padding"
+    tools:context=".AnimalSudoku.AS_ProgressActivity">
+
+    <TextView
+        android:id="@+id/zoo_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zoo_label"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/icon1"
+                style="@style/ASTileButton"
+                android:layout_column="1"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon2"
+                style="@style/ASTileButton"
+                android:layout_column="2"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon3"
+                style="@style/ASTileButton"
+                android:layout_column="3"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon4"
+                style="@style/ASTileButton"
+                android:layout_column="4"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon5"
+                style="@style/ASTileButton"
+                android:layout_column="5"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon6"
+                style="@style/ASTileButton"
+                android:layout_column="6"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon7"
+                style="@style/ASTileButton"
+                android:layout_column="7"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon8"
+                style="@style/ASTileButton"
+                android:layout_column="8"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon9"
+                style="@style/ASTileButton"
+                android:layout_column="9"
+                android:background="@drawable/as_tile_background" />
+        </TableRow>
+
+    </TableLayout>
+
+
+    <TextView
+        android:id="@+id/aquarium_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aquarium_label" />
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/icon10"
+                style="@style/ASTileButton"
+                android:layout_column="1"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon11"
+                style="@style/ASTileButton"
+                android:layout_column="2"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon12"
+                style="@style/ASTileButton"
+                android:layout_column="3"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon13"
+                style="@style/ASTileButton"
+                android:layout_column="4"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon14"
+                style="@style/ASTileButton"
+                android:layout_column="5"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon15"
+                style="@style/ASTileButton"
+                android:layout_column="6"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon16"
+                style="@style/ASTileButton"
+                android:layout_column="7"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon17"
+                style="@style/ASTileButton"
+                android:layout_column="8"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon18"
+                style="@style/ASTileButton"
+                android:layout_column="9"
+                android:background="@drawable/as_tile_background" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/bird_habitat_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bird_habitat_label" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/icon19"
+                style="@style/ASTileButton"
+                android:layout_column="1"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon20"
+                style="@style/ASTileButton"
+                android:layout_column="2"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon21"
+                style="@style/ASTileButton"
+                android:layout_column="3"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon22"
+                style="@style/ASTileButton"
+                android:layout_column="4"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon23"
+                style="@style/ASTileButton"
+                android:layout_column="5"
+                android:layout_row="2"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon24"
+                style="@style/ASTileButton"
+                android:layout_column="6"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon25"
+                style="@style/ASTileButton"
+                android:layout_column="7"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon26"
+                style="@style/ASTileButton"
+                android:layout_column="8"
+                android:layout_row="2"
+                android:background="@drawable/as_tile_background" />
+
+            <ImageButton
+                android:id="@+id/icon27"
+                style="@style/ASTileButton"
+                android:layout_column="9"
+                android:background="@drawable/as_tile_background" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

@@ -18,20 +18,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".TestDictionary" />
-        <activity android:name=".Acknowledgement" />
-        <activity android:name=".UTTT.UTTTMainActivity" />
-        <activity android:name=".UTTT.GameActivity" />
-        <activity android:name=".Scroggle.ScroggleGameActivity" />
-        <activity android:name=".Scroggle.ScroggleMainActivity" />
-        <activity android:name=".Scroggle.ScroggleStatus" />
-        <activity android:name=".Scroggle.Leaderboard" />
-        <activity android:name=".Scroggle.UserActivity" />
-        <activity android:name=".Scroggle.Scoreboard"   />
+        <activity android:name=".AboutActivity"/>
+        <activity android:name=".TestDictionary"/>
+        <activity android:name=".Acknowledgement"/>
+        <activity android:name=".UTTT.UTTTMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UTTT.GameActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.ScroggleGameActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.ScroggleMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.ScroggleStatus"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.Leaderboard"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.UserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Scroggle.Scoreboard"
+            android:screenOrientation="portrait"/>
 
-
-    <service android:name=".FCM.WordGameInstanceIDService">
+        <service android:name=".FCM.WordGameInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -42,6 +49,19 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".AnimalSudoku.AS_MainActivity"
+            android:screenOrientation="landscape">
+        </activity>
+
+        <activity
+            android:name=".AnimalSudoku.AS_ProgressActivity"
+            android:parentActivityName=".AnimalSudoku.AS_MainActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".AnimalSudoku.AS_GameActivity"
+            android:parentActivityName=".AnimalSudoku.AS_MainActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

@@ -1,0 +1,23 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    tools:context=".AnimalSudoku.AS_MainActivity">
+
+    <chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle.ScroggleScrollingView
+        android:id="@+id/wd_main_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scrollingDrawable="@drawable/wordgame_background" />
+
+    <fragment
+        android:id="@+id/wd_main_fragment"
+        class="chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_MainFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:layout="@layout/as_fragment_main"/>
+</FrameLayout>

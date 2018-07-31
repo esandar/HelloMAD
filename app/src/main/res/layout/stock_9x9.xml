@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/asstock1"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock2"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock3"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock4"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock5"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/asstock6"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock7"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock8"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/asstock9"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@drawable/as_tile_background" />
+
+        <ImageButton
+            android:id="@+id/revert_button"
+            style="@style/ASTileButton2"
+            android:layout_width="match_parent"
+            android:background="@android:color/darker_gray"
+            android:src="@drawable/undo" />
+    </LinearLayout>
+
+</LinearLayout>

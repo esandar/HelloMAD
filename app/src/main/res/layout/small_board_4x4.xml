@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/as_tile_background"
+    android:elevation="@dimen/elevation_low"
+    android:padding="@dimen/small_board_padding"
+    tools:context=".AnimalSudoku.AS_GameActivity">
+
+    <ImageButton android:id="@+id/assmall1" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background"
+        android:layout_column="0" android:layout_row="0"/>
+    <ImageButton android:id="@+id/assmall2" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background"
+        android:layout_column="1" android:layout_row="0"/>
+    <ImageButton android:id="@+id/assmall3" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background"
+        android:layout_column="0" android:layout_row="1"/>
+    <ImageButton android:id="@+id/assmall4" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background"
+        android:layout_column="1" android:layout_row="1"/>
+</GridLayout>

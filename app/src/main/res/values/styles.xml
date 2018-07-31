@@ -17,4 +17,26 @@
         <item name="android:scaleType">centerCrop</item>
         <item name="android:src">@drawable/uttt_tile</item>
     </style>
+
+    <!-- AnimalSudokuButton 4x4-->
+    <style name="ASTileButton">
+        <item name="android:layout_width">@dimen/as_tile_size</item>
+        <item name="android:layout_height">@dimen/as_tile_size</item>
+        <item name="android:layout_margin">@dimen/as_tile_margin</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:padding">@dimen/as_tile_padding</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/tile</item>
+    </style>
+
+    <!-- AnimalSudokuButton 9x9-->
+    <style name="ASTileButton2">
+        <item name="android:layout_width">@dimen/as_tile_size2</item>
+        <item name="android:layout_height">@dimen/as_tile_size2</item>
+        <item name="android:layout_margin">@dimen/as_tile_margin</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:padding">@dimen/as_tile_padding</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/tile</item>
+    </style>
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_MainActivity;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.Scroggle.ScroggleMainActivity;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.UTTT.UTTTMainActivity;
 
@@ -68,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
     //wordgame button
     public void open_wordgame(View view) {
         Intent intent = new Intent(this, ScroggleMainActivity.class);
+        startActivity(intent);
+    }
+
+    //AS button
+    public void open_as(View view) {
+        Intent intent = new Intent(this, AS_MainActivity.class);
         startActivity(intent);
     }
 }

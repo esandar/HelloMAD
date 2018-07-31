@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageButton android:id="@+id/asstock1" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background"/>
+    <ImageButton android:id="@+id/asstock2" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background" />
+    <ImageButton android:id="@+id/asstock3" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background" />
+    <ImageButton android:id="@+id/asstock4" style="@style/ASTileButton"
+        android:background="@drawable/as_tile_background" />
+
+    <ImageButton
+        android:id="@+id/revert_button"
+        style="@style/ASTileButton"
+        android:background="@android:color/darker_gray"
+        android:src="@drawable/undo" />
+</LinearLayout>
