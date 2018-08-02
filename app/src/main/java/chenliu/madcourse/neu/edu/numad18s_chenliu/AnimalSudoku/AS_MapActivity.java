@@ -13,6 +13,7 @@ import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 public class AS_MapActivity extends AppCompatActivity {
     private static final String TAG = "Animal Sudoku";
 
+    private boolean isCheat;
     private int zooProgress_4x4, zooProgress_9x9, aquariumProgress_4x4, aquariumProgress_9x9, birdHabitatProgress_4x4;
 
     @Override
@@ -42,6 +43,9 @@ public class AS_MapActivity extends AppCompatActivity {
                 0
         );
 
+        SharedPreferences configPref = getSharedPreferences("config", MODE_PRIVATE);
+        isCheat = configPref.getBoolean("cheat", false);
+
         View zooButton = findViewById(R.id.zoo_button);
         zooButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +58,7 @@ public class AS_MapActivity extends AppCompatActivity {
         aquariumButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (zooProgress_9x9 < 3) {
+                if (!isCheat && zooProgress_9x9 < 3) {
                     openAlertDialog("You need to play Zoo more to unlock Aquarium");
                 } else {
                     openNewGameDialog(1);
@@ -66,7 +70,7 @@ public class AS_MapActivity extends AppCompatActivity {
         birdHabitatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (aquariumProgress_9x9 < 3) {
+                if (!isCheat && aquariumProgress_9x9 < 3) {
                     openAlertDialog("You need to play Aquarium more to unlock Bird Habitat");
                 } else {
                     openNewGameDialog(2);
@@ -82,7 +86,7 @@ public class AS_MapActivity extends AppCompatActivity {
                 .setItems(R.array.difficulty,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialoginterface, int i) {
-                                if (i == AS_GameActivity.DIFFICULTY_HARD) {
+                                if (!isCheat && i == AS_GameActivity.DIFFICULTY_HARD) {
                                     if (theme == AS_GameActivity.THEME_ZOO && zooProgress_4x4 < 5) {
                                         openAlertDialog("Play more 4x4 Zoo to unlock 9x9");
                                     } else if (theme == AS_GameActivity.THEME_AQUARIUM && aquariumProgress_4x4 < 5) {
