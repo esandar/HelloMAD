@@ -77,8 +77,8 @@
         This game plays just as normal sudoku. Instead of filling the board with numbers, this game asks to fill with animal icons.
     </string>
     <string name="zoo_label">Zoo</string>
-    <string name="aquarium_label">Aquarium</string>
-    <string name="bird_habitat_label">Bird Habitat</string>
+    <string name="aquarium_label">Aqua Park</string>
+    <string name="bird_habitat_label">Rainforest</string>
 
     <string name="easy_label">4 x 4</string>
     <string name="hard_label">9 x 9</string>

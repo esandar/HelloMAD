@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
+
 public class AS_ProgressActivity extends AppCompatActivity {
 
     static private int mIconIds[] = {
@@ -47,18 +48,18 @@ public class AS_ProgressActivity extends AppCompatActivity {
 
         // Zoo is always active
         TextView zooLabel = findViewById(R.id.zoo_label);
-        zooLabel.setBackgroundColor(getResources().getColor(R.color.red_color));
+        zooLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
 
         // Aquarium is active only if Zoo 9x9 has been finished 3 times
         TextView aquariumLabel = findViewById(R.id.aquarium_label);
         if (isCheat || zooProgress_9x9 >= 3) {
-            aquariumLabel.setBackgroundColor(getResources().getColor(R.color.red_color));
+            aquariumLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
         }
 
         // Aquarium is active only if Aquarium 9x9 has been finished 3 times
         TextView birdHabitatLabel = findViewById(R.id.bird_habitat_label);
         if (isCheat || aquariumProgress_9x9 >= 3) {
-            birdHabitatLabel.setBackgroundColor(getResources().getColor(R.color.red_color));
+            birdHabitatLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
         }
 
         for (int i = 0; i < 9; i++) {
