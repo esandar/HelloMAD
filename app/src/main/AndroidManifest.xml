@@ -59,8 +59,7 @@
 
         <activity
             android:name=".AnimalSudoku.AS_MainActivity"
-            android:screenOrientation="landscape"></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".AnimalSudoku.AS_MapActivity"
             android:parentActivityName=".AnimalSudoku.AS_MainActivity"
@@ -73,6 +72,8 @@
             android:name=".AnimalSudoku.AS_GameActivity"
             android:parentActivityName=".AnimalSudoku.AS_MainActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".AnimalSudoku.AS_FriendsActivity" />
+        <activity android:name=".AnimalSudoku.AS_RegisterActivity"></activity>
     </application>
 
 </manifest>

@@ -92,4 +92,9 @@
 
     <string name="back_to_main">Back to Main</string>
     <string name="play_again">Play Again</string>
+    <string name="register">Register and share!</string>
+    <string name="search_friends">Search and add friends</string>
+    <string name="your_friends">Leaderboard</string>
+    <string name="username_hint">Please enter your username</string>
+    <string name="register_to_game">Register to the game</string>
 </resources>

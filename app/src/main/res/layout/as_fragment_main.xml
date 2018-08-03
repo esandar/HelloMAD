@@ -47,6 +47,14 @@
         android:text=""/>
 
     <Button
+        android:id="@+id/bt_as_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/menu_button_padding"
+        android:text="Friends"/>
+
+    <Button
         android:id="@+id/bt_as_instruction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
