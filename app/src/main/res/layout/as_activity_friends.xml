@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
-            android:onClick="register"
+            android:onClick="startRegister"
             android:padding="@dimen/menu_button_padding"
             android:text="@string/register" />
 
@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
+            android:onClick="startSearch"
             android:padding="@dimen/menu_button_padding"
             android:text="@string/search_friends" />
 

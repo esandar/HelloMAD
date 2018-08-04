@@ -20,14 +20,15 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.HashSet;
 import java.util.Set;
 
+import chenliu.madcourse.neu.edu.numad18s_chenliu.GlobalClass;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.models.ASUser;
 
-public class ScroggleRegisterActivity extends AppCompatActivity {
+public class AS_RegisterActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private String token;
-    private static Set<String> usernames = new HashSet<>();
+    //private static Set<String> usernames = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,11 @@ public class ScroggleRegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         token = FirebaseInstanceId.getInstance().getToken();
 
-        if(usernames.isEmpty()) {
-            new LoadUsernames().execute();
-        }
+//        if(usernames.isEmpty()) {
+//            new LoadUsernames().execute();
+//        }
 
-        Button register = (Button) findViewById(R.id.register);
+        Button register = (Button) findViewById(R.id.subscribe);
         register.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -58,29 +59,29 @@ public class ScroggleRegisterActivity extends AppCompatActivity {
 
         // Log and toast
         final String username = editText.getText().toString();
-        DatabaseReference tokenRef = mDatabase.child("users").child(token);
+        DatabaseReference tokenRef = mDatabase.child("asusers").child(token);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ASUser user;
-                if(!usernames.contains(username)) {
+                if(!GlobalClass.as_users.containsKey(username)) {
                     //create new user
                     if (dataSnapshot.exists()) {
                         user = dataSnapshot.getValue(ASUser.class);
                         user.setUsername(username);
-                        Toast.makeText(ScroggleRegisterActivity.this,
+                        Toast.makeText(AS_RegisterActivity.this,
                                 "Updated your username!", Toast.LENGTH_SHORT).show();
                     } else {
                         user = new ASUser(username, token);
-                        FirebaseMessaging.getInstance().subscribeToTopic("Animal Sudoku");
-                        Toast.makeText(ScroggleRegisterActivity.this,
+                        FirebaseMessaging.getInstance().subscribeToTopic("AnimalSudoku");
+                        Toast.makeText(AS_RegisterActivity.this,
                                 "Registered!", Toast.LENGTH_SHORT).show();
                     }
-                    mDatabase.child("users").child(token).setValue(user);
-                    usernames.add(username);
+                    mDatabase.child("asusers").child(token).setValue(user);
+                    GlobalClass.as_users.put(username, token);
                 } else {
-                    Toast.makeText(ScroggleRegisterActivity.this,
+                    Toast.makeText(AS_RegisterActivity.this,
                             "username exists! Please choose another one.", Toast.LENGTH_SHORT).show();
                 }
                 editText.setText("");
@@ -93,32 +94,32 @@ public class ScroggleRegisterActivity extends AppCompatActivity {
 
     }
 
-    private class LoadUsernames extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            DatabaseReference ref = mDatabase.child("users");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // Result will be holded Here
-                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                        ASUser user = dsp.getValue(ASUser.class);
-                        usernames.add(user.getUsername());
-                    }
-
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }});
-            return null;
-        }
-        protected void onProgressUpdate(Void... params) {
-        }
-
-        protected void onPostExecute(Void v) {
-        }
-    }
+//    private class LoadUsernames extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            DatabaseReference ref = mDatabase.child("users");
+//            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    // Result will be holded Here
+//                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+//                        ASUser user = dsp.getValue(ASUser.class);
+//                        usernames.add(user.getUsername());
+//                    }
+//
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }});
+//            return null;
+//        }
+//        protected void onProgressUpdate(Void... params) {
+//        }
+//
+//        protected void onPostExecute(Void v) {
+//        }
+//    }
 
 }

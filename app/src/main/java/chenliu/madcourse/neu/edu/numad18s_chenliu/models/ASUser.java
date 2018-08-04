@@ -3,17 +3,19 @@ package chenliu.madcourse.neu.edu.numad18s_chenliu.models;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ASUser {
 
     private String username;
     private String token;
     private String datePlayed;
-    private List<ASUser> friends;
-    private String score;
-    private String level;
+    private Map<String, String> friends;
+    private int score;
+    private int level;
 
     public ASUser() {
     }
@@ -22,9 +24,9 @@ public class ASUser {
         this.username = username;
         this.token = token;
         this.datePlayed = new SimpleDateFormat("yyyy.MM.dd", Locale.US).format(new Date());
-        this.friends = new ArrayList<>();
-        this.score = "0";
-        this.level = "0";
+        this.friends = new HashMap<>();
+        this.score = 0;
+        this.level = 0;
     }
 
     public String getUsername() {
@@ -35,15 +37,19 @@ public class ASUser {
         return token;
     }
 
-    public List<ASUser> getFriends() {
+    public Map<String, String> getFriends() {
         return friends;
     }
 
-    public String getScore() {
+    public String getDatePlayed() {
+        return datePlayed;
+    }
+
+    public int getScore() {
         return score;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
@@ -51,11 +57,19 @@ public class ASUser {
         this.username = username;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void addFriends(String token) {
+        if (this.friends == null) {
+            this.friends = new HashMap<>();
+        }
+        int size = this.friends.size();
+        this.friends.put("friend" + String.valueOf(size + 1), token);
     }
 }
