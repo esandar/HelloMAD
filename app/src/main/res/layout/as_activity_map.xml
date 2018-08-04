@@ -10,7 +10,7 @@ android:clipChildren="false"
 tools:context=".AnimalSudoku.AS_MapActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/map_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
