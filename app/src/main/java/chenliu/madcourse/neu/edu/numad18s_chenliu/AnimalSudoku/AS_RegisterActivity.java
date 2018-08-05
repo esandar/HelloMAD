@@ -28,7 +28,6 @@ public class AS_RegisterActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private String token;
-    //private static Set<String> usernames = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +37,6 @@ public class AS_RegisterActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         token = FirebaseInstanceId.getInstance().getToken();
-
-//        if(usernames.isEmpty()) {
-//            new LoadUsernames().execute();
-//        }
 
         Button register = (Button) findViewById(R.id.subscribe);
         register.setOnClickListener(new View.OnClickListener(){
@@ -69,7 +64,9 @@ public class AS_RegisterActivity extends AppCompatActivity {
                     //create new user
                     if (dataSnapshot.exists()) {
                         user = dataSnapshot.getValue(ASUser.class);
+                        String prevUsername = user.getUsername();
                         user.setUsername(username);
+                        GlobalClass.as_users.remove(prevUsername);
                         Toast.makeText(AS_RegisterActivity.this,
                                 "Updated your username!", Toast.LENGTH_SHORT).show();
                     } else {
@@ -93,33 +90,5 @@ public class AS_RegisterActivity extends AppCompatActivity {
         tokenRef.addListenerForSingleValueEvent(eventListener);
 
     }
-
-//    private class LoadUsernames extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            DatabaseReference ref = mDatabase.child("users");
-//            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    // Result will be holded Here
-//                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-//                        ASUser user = dsp.getValue(ASUser.class);
-//                        usernames.add(user.getUsername());
-//                    }
-//
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }});
-//            return null;
-//        }
-//        protected void onProgressUpdate(Void... params) {
-//        }
-//
-//        protected void onPostExecute(Void v) {
-//        }
-//    }
 
 }

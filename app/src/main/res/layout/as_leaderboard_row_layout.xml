@@ -22,28 +22,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  Score: " />
+            android:text="Score: " />
 
         <TextView
-            android:id="@+id/score"
+            android:id="@+id/friend_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  Level: " />
+            android:text="Level: " />
 
         <TextView
-            android:id="@+id/level"
+            android:id="@+id/friend_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/kudo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add"/>
+            android:text="@string/congrats"/>
     </LinearLayout>
 </LinearLayout>

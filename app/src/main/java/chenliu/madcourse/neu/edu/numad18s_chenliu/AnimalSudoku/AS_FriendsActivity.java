@@ -26,24 +26,21 @@ public class AS_FriendsActivity extends AppCompatActivity {
         setContentView(R.layout.as_activity_friends);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        GlobalClass.as_users.clear();
 
-        if (GlobalClass.as_users.isEmpty()) {
-            DatabaseReference ref = mDatabase.child("asusers");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // Result will be holded Here
-                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                        ASUser user = dsp.getValue(ASUser.class);
-                        GlobalClass.as_users.put(user.getUsername(), user.getToken());
-                    }
-
+        DatabaseReference ref = mDatabase.child("asusers");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Result will be holded Here
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    ASUser user = dsp.getValue(ASUser.class);
+                    GlobalClass.as_users.put(user.getUsername(), user.getToken());
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }});
-        }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
 
 
     }
@@ -55,6 +52,11 @@ public class AS_FriendsActivity extends AppCompatActivity {
 
     public void startSearch(View view) {
         Intent intent = new Intent(this, AS_SearchAddFriendsActivity.class);
+        startActivity(intent);
+    }
+
+    public void startLeaderboard(View view) {
+        Intent intent = new Intent(this, AS_Leaderboard_Activity.class);
         startActivity(intent);
     }
 

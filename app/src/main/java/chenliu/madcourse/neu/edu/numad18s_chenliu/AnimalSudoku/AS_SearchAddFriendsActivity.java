@@ -146,10 +146,15 @@ class UserListAdapter extends ArrayAdapter {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ASUser self = dataSnapshot.getValue(ASUser.class);
                         String friendToken = friend.getToken();
-                        self.addFriends(friendToken);
-                        mDatabase.child("asusers").child(token).setValue(self);
-                        Toast.makeText(getContext(),
-                                "Added!", Toast.LENGTH_SHORT).show();
+                        if (self.getFriends() != null && self.getFriends().containsValue(friendToken)) {
+                            Toast.makeText(getContext(),
+                                    "Friend exits!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            self.addFriends(friendToken);
+                            mDatabase.child("asusers").child(token).setValue(self);
+                            Toast.makeText(getContext(),
+                                    "Added!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
