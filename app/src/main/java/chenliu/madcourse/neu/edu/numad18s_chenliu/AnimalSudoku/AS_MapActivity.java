@@ -79,6 +79,7 @@ public class AS_MapActivity extends AppCompatActivity {
     private void openNewGameDialog(final int theme) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.new_game_title)
+
                 .setItems(R.array.difficulty,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialoginterface, int i) {

@@ -29,6 +29,7 @@ tools:context=".AnimalSudoku.AS_MapActivity">
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
+            android:elevation="0dp"
             android:padding="@dimen/menu_button_padding"
             android:text="@string/zoo_label" />
 
