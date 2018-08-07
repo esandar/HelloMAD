@@ -9,6 +9,7 @@ import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
 
 public class AS_ProgressActivity extends AppCompatActivity {
+    static public int numToUnlockNextTheme_9x9 = 1;
 
     static private int mIconIds[] = {
             R.id.icon1, R.id.icon2, R.id.icon3, R.id.icon4, R.id.icon5, R.id.icon6, R.id.icon7, R.id.icon8, R.id.icon9,
@@ -50,15 +51,15 @@ public class AS_ProgressActivity extends AppCompatActivity {
         TextView zooLabel = findViewById(R.id.zoo_label);
         zooLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
 
-        // Aquarium is active only if Zoo 9x9 has been finished 3 times
+        // Aquarium is active only if Zoo 9x9 has been finished X times
         TextView aquariumLabel = findViewById(R.id.aquarium_label);
-        if (isCheat || zooProgress_9x9 >= 3) {
+        if (isCheat || zooProgress_9x9 >= numToUnlockNextTheme_9x9) {
             aquariumLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
         }
 
-        // Aquarium is active only if Aquarium 9x9 has been finished 3 times
+        // Aquarium is active only if Aquarium 9x9 has been finished X times
         TextView birdHabitatLabel = findViewById(R.id.bird_habitat_label);
-        if (isCheat || aquariumProgress_9x9 >= 3) {
+        if (isCheat || aquariumProgress_9x9 >= numToUnlockNextTheme_9x9) {
             birdHabitatLabel.setBackgroundColor(getResources().getColor(R.color.available_color));
         }
 
@@ -69,13 +70,13 @@ public class AS_ProgressActivity extends AppCompatActivity {
             zooTile.setView(findViewById(mIconIds[i]));
             zooTile.updateDrawableState();
 
-            ASTile aquariumTile = !isCheat && (zooProgress_9x9 < 3 || aquariumProgress_4x4 + 4 < i + 1)
+            ASTile aquariumTile = !isCheat && (zooProgress_9x9 < numToUnlockNextTheme_9x9 || aquariumProgress_4x4 + 4 < i + 1)
                     ? new ASTile(i + 10, ASTile.status.LOCKED)              // not collected
                     : new ASTile(i + 10, ASTile.status.FILLED_FAIL);        // collected
             aquariumTile.setView(findViewById(mIconIds[i + 9]));
             aquariumTile.updateDrawableState();
 
-            ASTile birdHabitatTile = !isCheat && (aquariumProgress_9x9 < 3 || birdHabitatProgress_4x4 + 4 < i + 1)
+            ASTile birdHabitatTile = !isCheat && (aquariumProgress_9x9 < numToUnlockNextTheme_9x9 || birdHabitatProgress_4x4 + 4 < i + 1)
                     ? new ASTile(i + 19, ASTile.status.LOCKED)              // not collected
                     : new ASTile(i + 19, ASTile.status.FILLED_FAIL);        // collected
             birdHabitatTile.setView(findViewById(mIconIds[i + 18]));

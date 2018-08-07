@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+
+import static chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_ProgressActivity.numToUnlockNextTheme_9x9;
 
 public class AS_GameActivity extends AppCompatActivity {
     public static final String KEY_DIFFICULTY = "chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.difficulty";
@@ -98,6 +101,9 @@ public class AS_GameActivity extends AppCompatActivity {
     }
 
     private void initGame() {
+        SharedPreferences progressPref = getSharedPreferences("progress", MODE_PRIVATE);
+        int numOfUnlocks = progressPref.getInt(theme + "_" + AS_GameActivity.DIFFICULTY_EASY, 0);
+
         String puzzle = getPuzzle();
         mEntireBoard = new ASTile(0, ASTile.status.LOCKED);
         // Create all the tiles
@@ -110,7 +116,10 @@ public class AS_GameActivity extends AppCompatActivity {
                 if (number == 0) {
                     mSmallTiles[large][small] = new ASTile(number, ASTile.status.AVAILABLE);
                 } else {
-                    mSmallTiles[large][small] = new ASTile(number + theme * 9, ASTile.status.LOCKED);
+                    mSmallTiles[large][small] = new ASTile(
+                            number + theme * 9 + Math.min(numOfUnlocks, 5),
+                            ASTile.status.LOCKED
+                    );
                 }
             }
             mLargeTiles[large].setSubTiles(mSmallTiles[large]);
@@ -121,7 +130,10 @@ public class AS_GameActivity extends AppCompatActivity {
         // 1 ~ 9 for Zoo, 10 ~ 18 for aquarium, 19 ~ 27 for bird habitat
         stockTiles = new ASTile[puzzleSize];
         for (int i = 0; i < puzzleSize; i++) {
-            stockTiles[i] = new ASTile(i + 1 + theme * 9, ASTile.status.NUMBER_NOT_SELECTED);
+            stockTiles[i] = new ASTile(
+                    i + 1 + theme * 9 + Math.min(numOfUnlocks, 5),
+                    ASTile.status.NUMBER_NOT_SELECTED
+            );
         }
 
         currentNumber = 0;
@@ -167,16 +179,34 @@ public class AS_GameActivity extends AppCompatActivity {
 
                                 if (checkPass()) {
                                     // Update progress
-                                    SharedPreferences sharedPreferences = getSharedPreferences("progress", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    SharedPreferences progressPref = getSharedPreferences("progress", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = progressPref.edit();
                                     String key = theme + "_" + difficulty;
-                                    editor.putInt(key, sharedPreferences.getInt(key, 0) + 1);
+                                    int numOfUnlocks = progressPref.getInt(key, 0);
+                                    editor.putInt(key, numOfUnlocks + 1);
                                     editor.commit();
 
                                     // Popup success screen
                                     AlertDialog.Builder builder = new AlertDialog.Builder(AS_GameActivity.this);
                                     LayoutInflater inflater = getLayoutInflater();
-                                    builder.setView(inflater.inflate(R.layout.finish_game, null));
+                                    View finishView = inflater.inflate(R.layout.finish_game, null);
+
+                                    if (difficulty == DIFFICULTY_EASY && numOfUnlocks < 5) {
+                                        TextView unlock = finishView.findViewById(R.id.unlock_message);
+                                        unlock.setText("You have unlocked new animal: ");
+                                        ImageButton unlock_icon = finishView.findViewById(R.id.unlock_icon);
+                                        ASTile tile = new ASTile(4 + numOfUnlocks + 1 + theme * 9, ASTile.status.FILLED_FAIL);
+                                        tile.setView(unlock_icon);
+                                        tile.updateDrawableState();
+                                    } else if (difficulty == DIFFICULTY_HARD && numOfUnlocks + 1 == numToUnlockNextTheme_9x9) {
+                                        ImageButton unlock_icon = finishView.findViewById(R.id.unlock_icon);
+                                        unlock_icon.setVisibility(View.INVISIBLE);
+                                        TextView unlock = finishView.findViewById(R.id.unlock_message);
+                                        String nextTheme = theme == THEME_ZOO ? "Aquarium" : theme == THEME_AQUARIUM ? "Bird Habitat" : "";
+                                        unlock.setText("You have unlocked new theme! " + nextTheme);
+                                    }
+
+                                    builder.setView(finishView);
                                     builder.setPositiveButton(
                                             R.string.play_again,
                                             new DialogInterface.OnClickListener() {
