@@ -1,5 +1,7 @@
 package chenliu.madcourse.neu.edu.numad18s_chenliu;
 
+import android.location.Location;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -14,5 +16,6 @@ public class GlobalClass {
     public static Map<String, ArrayList<Integer>> scoreMap = new HashMap<String, ArrayList<Integer>>();
     public static String curUser = new String();
     public static Map<String, String> as_users = new HashMap<>();
+    public static Location updatedLocation;
 
 }

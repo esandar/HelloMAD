@@ -1,6 +1,7 @@
 package chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku;
 
 import android.app.Activity;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String token;
     private List<ASUser> friends = new ArrayList<>();
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.as_activity_search_add_friends);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         token = FirebaseInstanceId.getInstance().getToken();
+        listView = findViewById(R.id.user_listview);
 
         Button search = findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +72,7 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
 
         final EditText editText = (EditText) findViewById(R.id.username);
         final String friendUsername = editText.getText().toString();
-        final ListView listView = findViewById(R.id.user_listview);
+//        final ListView listView = findViewById(R.id.user_listview);
 
         if (GlobalClass.as_users.containsKey(friendUsername)) {
             String friendToken = GlobalClass.as_users.get(friendUsername);
@@ -83,10 +86,15 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
                 tokenRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ASUser friend = dataSnapshot.getValue(ASUser.class);
-                        friends.add(friend);
-                        Log.d("Friends", friends.toString());
-                        listView.setAdapter(new UserListAdapter(AS_SearchAddFriendsActivity.this, friends, token, mDatabase));
+                        if(dataSnapshot.exists()) {
+                            ASUser friend = dataSnapshot.getValue(ASUser.class);
+                            friends.add(friend);
+                            Log.d("Friends", friends.toString());
+                            listView.setAdapter(new UserListAdapter(AS_SearchAddFriendsActivity.this, friends, token, mDatabase));
+                        } else {
+                            Toast.makeText(AS_SearchAddFriendsActivity.this,
+                                    "There is no user with this username!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -103,6 +111,39 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
 
     public void nearbyUsers() {
         friends.clear();
+        if (GlobalClass.updatedLocation == null) {
+            Toast.makeText(AS_SearchAddFriendsActivity.this,
+                    "Location permission is not granted", Toast.LENGTH_SHORT).show();
+        } else {
+            DatabaseReference ref = mDatabase.child("asusers");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Result will be holded Here
+                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                        ASUser user = dsp.getValue(ASUser.class);
+                        if (!user.getToken().equals(token) && user.getLatitude() != 0.0 && user.getLongitude() != 0.0) {
+                            float[] res = new float[1];
+                            Location.distanceBetween(GlobalClass.updatedLocation.getLatitude(), GlobalClass.updatedLocation.getLongitude(),
+                                    user.getLatitude(), user.getLongitude(), res);
+                            if (res[0] <= 80000.0) {
+                                friends.add(user);
+                            }
+                        }
+                    }
+                    if (friends.isEmpty()) {
+                        Toast.makeText(AS_SearchAddFriendsActivity.this,
+                                "No nearby users!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        listView.setAdapter(new UserListAdapter(AS_SearchAddFriendsActivity.this, friends, token, mDatabase));
+                    }
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }});
+        }
     }
 }
 
@@ -144,16 +185,21 @@ class UserListAdapter extends ArrayAdapter {
                 tokenRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ASUser self = dataSnapshot.getValue(ASUser.class);
-                        String friendToken = friend.getToken();
-                        if (self.getFriends() != null && self.getFriends().containsValue(friendToken)) {
+                        if (!dataSnapshot.exists()) {
                             Toast.makeText(getContext(),
-                                    "Friend exits!", Toast.LENGTH_SHORT).show();
+                                    "You have not registered!", Toast.LENGTH_SHORT).show();
                         } else {
-                            self.addFriends(friendToken);
-                            mDatabase.child("asusers").child(token).setValue(self);
-                            Toast.makeText(getContext(),
-                                    "Added!", Toast.LENGTH_SHORT).show();
+                            ASUser self = dataSnapshot.getValue(ASUser.class);
+                            String friendToken = friend.getToken();
+                            if (self.getFriends() != null && self.getFriends().containsValue(friendToken)) {
+                                Toast.makeText(getContext(),
+                                        "Friend exits!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                self.addFriends(friendToken);
+                                mDatabase.child("asusers").child(token).setValue(self);
+                                Toast.makeText(getContext(),
+                                        "Added!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                     @Override
