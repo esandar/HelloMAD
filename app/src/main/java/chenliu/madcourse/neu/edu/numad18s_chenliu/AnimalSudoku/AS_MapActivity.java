@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 
+import static chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_ProgressActivity.numToUnlockNextTheme_9x9;
+
 public class AS_MapActivity extends AppCompatActivity {
     private static final String TAG = "Animal Sudoku";
 
@@ -22,9 +24,9 @@ public class AS_MapActivity extends AppCompatActivity {
     }
 
     private Progress getCurrentProgress() {
-        if (aquariumProgress_9x9 >= 3) {
+        if (aquariumProgress_9x9 >= numToUnlockNextTheme_9x9) {
             return Progress.BIRD_HABITAT_UNLOCKED;
-        } else if (zooProgress_9x9 >= 3) {
+        } else if (zooProgress_9x9 >= numToUnlockNextTheme_9x9) {
             return Progress.AQUARIUM_UNLOCKED;
         } else {
             return Progress.ZOO_UNLOCKED;
