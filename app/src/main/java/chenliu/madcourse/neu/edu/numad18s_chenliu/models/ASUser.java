@@ -12,7 +12,7 @@ public class ASUser {
     private String token;
     private String datePlayed;
     private Map<String, String> friends;
-    private int score;
+    //private int score;
     private int level;
     private double latitude;
     private double longitude;
@@ -25,7 +25,7 @@ public class ASUser {
         this.token = token;
         this.datePlayed = new SimpleDateFormat("yyyy.MM.dd", Locale.US).format(new Date());
         this.friends = new HashMap<>();
-        this.score = 0;
+        //this.score = 0;
         this.level = 0;
         this.latitude = 0.0;
         this.longitude = 0.0;
@@ -63,9 +63,9 @@ public class ASUser {
         return datePlayed;
     }
 
-    public int getScore() {
-        return score;
-    }
+//    public int getScore() {
+//        return score;
+//    }
 
     public int getLevel() {
         return level;
@@ -75,9 +75,9 @@ public class ASUser {
         this.username = username;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+//    public void setScore(int score) {
+//        this.score = score;
+//    }
 
     public void setLevel(int level) {
         this.level = level;

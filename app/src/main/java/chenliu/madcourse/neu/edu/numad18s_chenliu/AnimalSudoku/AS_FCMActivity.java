@@ -144,7 +144,7 @@ public class AS_FCMActivity extends AppCompatActivity {
         JSONObject jNotification = new JSONObject();
         try {
             jNotification.put("title", "Congrats");
-            jNotification.put("body", "Congrats for your score :) ");
+            jNotification.put("body", "Congrats for your level :) ");
             jNotification.put("sound", "default");
             jNotification.put("badge", "1");
             /*

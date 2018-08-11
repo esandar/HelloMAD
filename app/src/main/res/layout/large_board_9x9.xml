@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     tools:context=".AnimalSudoku.AS_GameActivity">
 
+
     <include android:id="@+id/aslarge1" layout="@layout/small_board_9x9"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_board_margin"

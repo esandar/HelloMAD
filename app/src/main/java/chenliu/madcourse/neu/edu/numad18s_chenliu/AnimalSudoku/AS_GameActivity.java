@@ -5,18 +5,28 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 
 import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
+import chenliu.madcourse.neu.edu.numad18s_chenliu.models.ASUser;
 
 import static chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_ProgressActivity.numToUnlockNextTheme_9x9;
 
@@ -40,6 +50,9 @@ public class AS_GameActivity extends AppCompatActivity {
 
     private int theme;
     private int difficulty;
+
+    private String token;
+    private DatabaseReference mDatabase;
 
     public static final int DIFFICULTY_EASY = 0;
     public static final int DIFFICULTY_HARD = 1;
@@ -68,6 +81,9 @@ public class AS_GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        token = FirebaseInstanceId.getInstance().getToken();
 
         // Choose 4x4 or 9x9
         difficulty = getIntent().getIntExtra(KEY_DIFFICULTY, DIFFICULTY_EASY);
@@ -190,6 +206,27 @@ public class AS_GameActivity extends AppCompatActivity {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(AS_GameActivity.this);
                                     LayoutInflater inflater = getLayoutInflater();
                                     View finishView = inflater.inflate(R.layout.finish_game, null);
+                                    final TextView levelNo = finishView.findViewById(R.id.level_no);
+
+                                    DatabaseReference tokenRef = mDatabase.child("asusers").child(token);
+                                    tokenRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                ASUser self = dataSnapshot.getValue(ASUser.class);
+                                                int levelNum = self.getLevel();
+                                                Log.d("User", "level is "+ String.valueOf(levelNum));
+                                                int currentLevel = levelNum + 1;
+                                                self.setLevel(currentLevel);
+                                                levelNo.setText(String.valueOf(currentLevel));
+                                                mDatabase.child("asusers").child(token).setValue(self);
+                                            }
+
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }});
 
                                     if (difficulty == DIFFICULTY_EASY && numOfUnlocks < 5) {
                                         TextView unlock = finishView.findViewById(R.id.unlock_message);
@@ -290,6 +327,7 @@ public class AS_GameActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void updateAllTiles() {
         mEntireBoard.updateDrawableState();

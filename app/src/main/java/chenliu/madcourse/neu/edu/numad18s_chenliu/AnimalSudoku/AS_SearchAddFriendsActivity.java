@@ -120,22 +120,27 @@ public class AS_SearchAddFriendsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // Result will be holded Here
-                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                        ASUser user = dsp.getValue(ASUser.class);
-                        if (!user.getToken().equals(token) && user.getLatitude() != 0.0 && user.getLongitude() != 0.0) {
-                            float[] res = new float[1];
-                            Location.distanceBetween(GlobalClass.updatedLocation.getLatitude(), GlobalClass.updatedLocation.getLongitude(),
-                                    user.getLatitude(), user.getLongitude(), res);
-                            if (res[0] <= 80000.0) {
-                                friends.add(user);
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            ASUser user = dsp.getValue(ASUser.class);
+                            if (!user.getToken().equals(token) && user.getLatitude() != 0.0 && user.getLongitude() != 0.0) {
+                                float[] res = new float[1];
+                                Location.distanceBetween(GlobalClass.updatedLocation.getLatitude(), GlobalClass.updatedLocation.getLongitude(),
+                                        user.getLatitude(), user.getLongitude(), res);
+                                if (res[0] <= 80000.0) {
+                                    friends.add(user);
+                                }
                             }
                         }
-                    }
-                    if (friends.isEmpty()) {
-                        Toast.makeText(AS_SearchAddFriendsActivity.this,
-                                "No nearby users!", Toast.LENGTH_SHORT).show();
+                        if (friends.isEmpty()) {
+                            Toast.makeText(AS_SearchAddFriendsActivity.this,
+                                    "No nearby users!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            listView.setAdapter(new UserListAdapter(AS_SearchAddFriendsActivity.this, friends, token, mDatabase));
+                        }
                     } else {
-                        listView.setAdapter(new UserListAdapter(AS_SearchAddFriendsActivity.this, friends, token, mDatabase));
+                        Toast.makeText(AS_SearchAddFriendsActivity.this,
+                                "You have not registered to share!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -169,12 +174,12 @@ class UserListAdapter extends ArrayAdapter {
         final ASUser friend = users.get(position);
 
         final TextView userName = rowView.findViewById(R.id.username);
-        TextView userScore = rowView.findViewById(R.id.score);
+        //TextView userScore = rowView.findViewById(R.id.score);
         TextView userLevel = rowView.findViewById(R.id.level);
         Button addButton = rowView.findViewById(R.id.add_button);
 
         userName.setText(friend.getUsername());
-        userScore.setText(String.valueOf(friend.getScore()));
+        //userScore.setText(String.valueOf(friend.getScore()));
         userLevel.setText(String.valueOf(friend.getLevel()));
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
