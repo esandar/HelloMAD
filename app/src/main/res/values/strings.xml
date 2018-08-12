@@ -78,7 +78,8 @@
         1. Before start, you have to register yourself to use friends feature, including leaderboard and adding nearby users. \n\
         2. Cheat button is to unlock all animals and themes for testing purpose. \n\
         3. You only have four animals available at the beginning, and you will unlock new animals while you playing. Once you have all nine animals activated in a theme
-        you can play 9x9 game on a large board. After you finish 3 games in a large board, you will unlock the next theme. \n\
+        you can play 9x9 game on a large board. After you finish 3 games in a large board, you will unlock the next theme. When start, the aqua park and rainforest image are
+        not in gray color which means they are still locked. Once unlocked, their color will change. \n\
         4. The progress button on the main menu is to check your current game status. It will show the current available features you have activated (Green color). \n\
         5. When you select a theme on the map, you can see the theme you selected is highlighted on the background (This is a feature). \n\
         6. When playing a game, you have to select an animal from the left stockboard to fill the main game board. When the board is all filled, the system will automatically
