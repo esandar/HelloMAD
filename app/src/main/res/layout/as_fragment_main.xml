@@ -6,76 +6,74 @@
  ! We make no guarantees that this code is fit for any purpose.
  ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/uttt_menu_background"
     android:elevation="@dimen/elevation_high"
     android:orientation="vertical"
     android:padding="@dimen/menu_padding"
     tools:context=".AnimalSudoku.AS_MainActivity">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/as_name"
-        android:textAlignment="center"
-        android:textSize="18sp" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bt_as_newgame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/menu_button_margin"
-        android:padding="@dimen/menu_button_padding"
-        android:text="New Game"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/bt_as_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/menu_button_padding"
-        android:text="Progress"/>
+            <Button
+                android:id="@+id/bt_as_newgame"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_blue"
+                android:text="New Game" />
 
-    <Button
-        android:id="@+id/bt_as_cheat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/menu_button_padding"
-        android:text=""/>
+            <Button
+                android:id="@+id/bt_as_progress"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_blue"
+                android:text="Progress" />
 
-    <Button
-        android:id="@+id/bt_as_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/menu_button_padding"
-        android:text="Friends"/>
+            <Button
+                android:id="@+id/bt_as_cheat"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_red"
+                android:text="" />
 
-    <Button
-        android:id="@+id/bt_as_instruction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/menu_button_padding"
-        android:text="How To Play"/>
+            <Button
+                android:id="@+id/bt_as_friends"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_green"
+                android:text="Friends" />
 
-    <Button
-        android:id="@+id/bt_as_ack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/menu_button_padding"
-        android:text="Acknowledgement"/>
+            <Button
+                android:id="@+id/bt_as_instruction"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_yellow"
+                android:text="How To Play" />
 
-    <Button
-        android:id="@+id/bt_as_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/menu_button_padding"
-        android:text="About"/>
+            <Button
+                android:id="@+id/bt_as_ack"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_yellow"
+                android:text="Acknowledgement" />
+
+            <Button
+                android:id="@+id/bt_as_about"
+                style="@style/ButtonText"
+                android:layout_width="match_parent"
+                android:background="@drawable/bt_yellow"
+                android:text="About" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

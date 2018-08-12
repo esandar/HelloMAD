@@ -25,32 +25,35 @@
 
         <Button
             android:id="@+id/register"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
             android:onClick="startRegister"
-            android:padding="@dimen/menu_button_padding"
+            android:background="@drawable/bt_blue"
             android:text="@string/register" />
 
         <Button
             android:id="@+id/search"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
             android:onClick="startSearch"
-            android:padding="@dimen/menu_button_padding"
+            android:background="@drawable/bt_yellow"
             android:text="@string/search_friends" />
 
         <Button
             android:id="@+id/leaderboard"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/menu_button_margin"
             android:onClick="startLeaderboard"
-            android:padding="@dimen/menu_button_padding"
+            android:background="@drawable/bt_red"
             android:text="@string/your_friends" />
     </LinearLayout>
 
