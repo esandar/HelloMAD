@@ -71,6 +71,7 @@ public class AS_MainActivity extends Activity {
     }
 
     private void updateUserLocation() {
+
         if (GlobalClass.updatedLocation != null) {
             DatabaseReference tokenRef = mDatabase.child("asusers").child(token);
 

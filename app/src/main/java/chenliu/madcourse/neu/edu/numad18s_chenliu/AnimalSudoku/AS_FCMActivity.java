@@ -1,5 +1,7 @@
 package chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -127,6 +129,8 @@ public class AS_FCMActivity extends AppCompatActivity {
 
         final String targetToken = token;
 
+        Log.d("Friend", targetToken);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -143,8 +147,8 @@ public class AS_FCMActivity extends AppCompatActivity {
         JSONObject jPayload = new JSONObject();
         JSONObject jNotification = new JSONObject();
         try {
-            jNotification.put("title", "Congrats");
-            jNotification.put("body", "Congrats for your level :) ");
+            jNotification.put("title", "Animal Sudoku");
+            jNotification.put("body", "Your friend congrats to your level :) ");
             jNotification.put("sound", "default");
             jNotification.put("badge", "1");
             /*
@@ -194,14 +198,14 @@ public class AS_FCMActivity extends AppCompatActivity {
             InputStream inputStream = conn.getInputStream();
             final String resp = convertStreamToString(inputStream);
 
-//            Handler h = new Handler(Looper.getMainLooper());
-//            h.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Log.e(TAG, "run: " + resp);
-//                    Toast.makeText(FCMActivity.this,resp,Toast.LENGTH_LONG).show();
-//                }
-//            });
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "run: " + resp);
+                    //Toast.makeText(AS_FCMActivity.this,resp,Toast.LENGTH_LONG).show();
+                }
+            });
 
         } catch (JSONException | IOException e) {
             e.printStackTrace();
