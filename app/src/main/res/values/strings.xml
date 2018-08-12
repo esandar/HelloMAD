@@ -75,6 +75,7 @@
     </string>
     <string name="as_ins">
         This game plays just as normal sudoku. Instead of filling the board with numbers, this game asks to fill with animal icons. \n\
+        This orientation for this game is locked in landscape view.
         1. Before start, you have to register yourself to use friends feature, including leaderboard and adding nearby users. \n\
         2. Cheat button is to unlock all animals and themes for testing purpose. \n\
         3. You only have four animals available at the beginning, and you will unlock new animals while you playing. Once you have all nine animals activated in a theme
