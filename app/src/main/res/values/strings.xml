@@ -83,8 +83,8 @@
         not in gray color which means they are still locked. Once unlocked, their color will change. \n\
         4. The progress button on the main menu is to check your current game status. It will show the current available features you have activated (Green color). \n\
         5. When you select a theme on the map, you can see the theme you selected is highlighted on the background (This is a feature). \n\
-        6. When playing a game, you have to select an animal from the left stockboard to fill the main game board. If one tile turn green, that means same animals
-        appear in the same row or colume or same small board, which will give you a clue of wrong move. When the board is all filled, the system will automatically
+        6. When playing a game, you have to select an animal from the left stockboard to fill the main game board. If the tile you select turn green, it means a valid move;
+         if the tile turn red, that means same animal already appear in the same row or colume or same small board, which will give you a clue of wrong move. When the board is all filled, the system will automatically
         calculate if you have won. \n\
     </string>
     <string name="zoo_label">Zoo</string>

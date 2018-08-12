@@ -140,6 +140,17 @@ public class AS_GameActivity extends AppCompatActivity {
         mMediaPlayer.start();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Get rid of the about dialog if it's still up
+        if (mDialog != null)
+            mDialog.dismiss();
+        mMediaPlayer.stop();
+        mMediaPlayer.reset();
+        mMediaPlayer.release();
+    }
+
     private void initGame() {
         SharedPreferences progressPref = getSharedPreferences("progress", MODE_PRIVATE);
         int numOfUnlocks = progressPref.getInt(theme + "_" + AS_GameActivity.DIFFICULTY_EASY, 0);
@@ -427,12 +438,4 @@ public class AS_GameActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        // Get rid of the about dialog if it's still up
-        if (mDialog != null)
-            mDialog.dismiss();
-    }
 }

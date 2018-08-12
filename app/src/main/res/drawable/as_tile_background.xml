@@ -4,13 +4,13 @@
       android:drawable="@drawable/tile_empty"
       android:maxLevel="0"/>
    <item
-      android:drawable="@drawable/tile_red"
+      android:drawable="@drawable/tile_available"
       android:maxLevel="1"/>
    <item
-      android:drawable="@drawable/tile_gray"
+      android:drawable="@drawable/tile_available"
       android:maxLevel="2"/>
    <item
-      android:drawable="@drawable/tile_available"
+      android:drawable="@drawable/tile_red"
       android:maxLevel="3"/>
    <item
        android:drawable="@drawable/tile_blue"
