@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +32,7 @@ import chenliu.madcourse.neu.edu.numad18s_chenliu.R;
 import chenliu.madcourse.neu.edu.numad18s_chenliu.models.ASUser;
 
 import static chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.AS_ProgressActivity.numToUnlockNextTheme_9x9;
+import static chenliu.madcourse.neu.edu.numad18s_chenliu.R.raw.background_mansu;
 
 public class AS_GameActivity extends AppCompatActivity {
     public static final String KEY_DIFFICULTY = "chenliu.madcourse.neu.edu.numad18s_chenliu.AnimalSudoku.difficulty";
@@ -42,6 +46,11 @@ public class AS_GameActivity extends AppCompatActivity {
     private ASTile mLargeTiles[] = new ASTile[9];
     private ASTile mSmallTiles[][] = new ASTile[9][9];
     private AlertDialog mDialog;
+
+    private int mSoundClick, mSoundSubmit, mSoundMiss, mSoundRewind;
+    private SoundPool mSoundPool;
+    public static MediaPlayer mMediaPlayer;
+    private float mVolume = 1f;
 
     private int puzzleSize;     // 4 or 9
     private ASTile stockTiles[];  // tiles on the left for choose
@@ -82,6 +91,13 @@ public class AS_GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // load the soundpool
+        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        mSoundClick = mSoundPool.load(this, R.raw.choice, 1);
+        mSoundSubmit = mSoundPool.load(this, R.raw.submit_suc, 1);
+        mSoundMiss = mSoundPool.load(this, R.raw.erkanozan_miss, 1);
+        mSoundRewind = mSoundPool.load(this, R.raw.joanne_rewind, 1);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         token = FirebaseInstanceId.getInstance().getToken();
 
@@ -114,6 +130,14 @@ public class AS_GameActivity extends AppCompatActivity {
         initGame();
         initViews();
         updateAllTiles();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mMediaPlayer = MediaPlayer.create(this, background_mansu);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.start();
     }
 
     private void initGame() {
@@ -172,6 +196,7 @@ public class AS_GameActivity extends AppCompatActivity {
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mSoundPool.play(mSoundClick, mVolume, mVolume, 1, 0, 1f);
                         ASTile operatedTile = mSmallTiles[fLarge][fSmall];
                         if (currentNumber == 0) {
                             // if use want to fill a empty tile, but has not selected a number first
@@ -284,6 +309,7 @@ public class AS_GameActivity extends AppCompatActivity {
             stockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mSoundPool.play(mSoundClick, mVolume, mVolume, 1, 0, 1f);
                     currentNumber = stockTile.getNumber();
                     for (ASTile t : stockTiles) {
                         t.setStatus(ASTile.status.NUMBER_NOT_SELECTED);
@@ -298,6 +324,7 @@ public class AS_GameActivity extends AppCompatActivity {
         revertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSoundPool.play(mSoundMiss, mVolume, mVolume, 1, 0, 1f);
                 if (moves.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AS_GameActivity.this);
                     builder.setMessage(R.string.no_move_text);

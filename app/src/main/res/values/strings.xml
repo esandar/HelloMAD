@@ -56,7 +56,7 @@
     </string>
 
     <!--AnimalSudoku Strings-->
-    <string name="as_name">Animal Sudoku</string>
+    <string name="as_name">Launch[Animal Sudoku]</string>
     <string name="as_progress_label">Progress</string>
     <string name="as_tutorial_label">How To Play</string>
     <string name="as_acknowledgement_label">Acknowledgement</string>
