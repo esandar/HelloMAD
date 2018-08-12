@@ -12,7 +12,7 @@ public class BaseDao {
     public BaseDao() {
         if (db == null) {
             db = FirebaseDatabase.getInstance();
-            db.setPersistenceEnabled(true);
+            //db.setPersistenceEnabled(true);
         }
         dbRef = db.getReference();
         clientToken = FirebaseInstanceId.getInstance().getToken();

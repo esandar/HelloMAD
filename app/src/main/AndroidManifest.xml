@@ -94,8 +94,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".AnimalSudoku.AS_FCMActivity"
-            android:screenOrientation="landscape" ></activity>
+        <!--<activity android:name=".AnimalSudoku.AS_FCMActivity"-->
+            <!--android:screenOrientation="landscape" ></activity>-->
     </application>
 
 </manifest>

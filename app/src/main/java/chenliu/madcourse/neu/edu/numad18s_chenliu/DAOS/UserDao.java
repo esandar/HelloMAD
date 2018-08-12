@@ -17,7 +17,7 @@ public class UserDao extends BaseDao {
     public UserDao() {
         super();
         userDbRef = getDbRef().child("users").child(getClientToken());
-        userDbRef.keepSynced(true);
+        //userDbRef.keepSynced(true);
     }
 
     public void addUser(final User user) {
