@@ -36,10 +36,10 @@ public class GameDao extends BaseDao {
     public GameDao() {
         super();
         gamesDbRef = getDbRef().child("games");
-        gamesDbRef.keepSynced(true);
+        //gamesDbRef.keepSynced(true);
 
         userGamesDbRef = getDbRef().child("userGames").child(getClientToken());
-        userGamesDbRef.keepSynced(true);
+        //userGamesDbRef.keepSynced(true);
     }
 
     public String addGame(Game game) {
