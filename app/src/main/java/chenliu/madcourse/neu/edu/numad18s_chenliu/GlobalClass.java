@@ -13,5 +13,6 @@ public class GlobalClass {
     public static List<String> nineLetterWords = new ArrayList<String>();
     public static Map<String, ArrayList<Integer>> scoreMap = new HashMap<String, ArrayList<Integer>>();
     public static String curUser = new String();
+    public static Map<String, String> as_users = new HashMap<>();
 
 }

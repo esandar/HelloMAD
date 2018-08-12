@@ -47,6 +47,15 @@ public class AS_MainFragment extends Fragment {
         View ackButton = rootView.findViewById(R.id.bt_as_ack);
         View howToPlayButton = rootView.findViewById(R.id.bt_as_instruction);
         View aboutButton = rootView.findViewById(R.id.bt_as_about);
+        View friendButton = rootView.findViewById(R.id.bt_as_friends);
+
+        friendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AS_FriendsActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override

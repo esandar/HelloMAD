@@ -59,8 +59,7 @@
 
         <activity
             android:name=".AnimalSudoku.AS_MainActivity"
-            android:screenOrientation="landscape"></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".AnimalSudoku.AS_MapActivity"
             android:parentActivityName=".AnimalSudoku.AS_MainActivity"
@@ -73,6 +72,23 @@
             android:name=".AnimalSudoku.AS_GameActivity"
             android:parentActivityName=".AnimalSudoku.AS_MainActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".AnimalSudoku.AS_FriendsActivity" />
+        <activity android:name=".AnimalSudoku.AS_RegisterActivity" />
+        <activity android:name=".AnimalSudoku.AS_SearchAddFriendsActivity" />
+        <activity android:name=".AnimalSudoku.AS_Leaderboard_Activity" />
+
+        <service android:name=".AnimalSudoku.ASInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".AnimalSudoku.ASMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".AnimalSudoku.AS_FCMActivity"></activity>
     </application>
 
 </manifest>
