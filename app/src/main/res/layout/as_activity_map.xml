@@ -25,6 +25,7 @@ tools:context=".AnimalSudoku.AS_MapActivity">
 
         <Button
             android:id="@+id/zoo_button"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,6 +34,7 @@ tools:context=".AnimalSudoku.AS_MapActivity">
 
         <Button
             android:id="@+id/aquarium_button"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,6 +43,7 @@ tools:context=".AnimalSudoku.AS_MapActivity">
 
         <Button
             android:id="@+id/bird_habitat_button"
+            style="@style/ButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
