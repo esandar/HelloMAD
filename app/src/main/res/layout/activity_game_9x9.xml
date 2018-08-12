@@ -32,5 +32,14 @@
             layout="@layout/large_board_9x9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/bt_as_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/elevation_low"
+        android:layout_gravity="top|right"
+        android:src="@drawable/wordgame_sound"/>
 </FrameLayout>

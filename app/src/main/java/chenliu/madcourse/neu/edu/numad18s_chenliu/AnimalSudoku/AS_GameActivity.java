@@ -50,6 +50,8 @@ public class AS_GameActivity extends AppCompatActivity {
     private int mSoundClick, mSoundSubmit, mSoundMiss, mSoundRewind;
     private SoundPool mSoundPool;
     public static MediaPlayer mMediaPlayer;
+    private Boolean muteClicked = false; //sound flag
+    private static ImageButton muteMusic;
     private float mVolume = 1f;
 
     private int puzzleSize;     // 4 or 9
@@ -113,6 +115,28 @@ public class AS_GameActivity extends AppCompatActivity {
             puzzleSize = 4;
             setContentView(R.layout.activity_game_4x4);
         }
+
+        muteMusic = (ImageButton) this.findViewById((R.id.bt_as_sound));
+        muteMusic.setImageLevel(1);
+        muteMusic.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                muteClicked = !muteClicked;
+                if (muteClicked == false) {
+                    muteMusic.setImageLevel(1);
+                } else {
+                    muteMusic.setImageLevel(0);
+                }
+                if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.pause();
+                } else {
+                    mMediaPlayer.start();
+                }
+            }
+
+        });
 
         // Choose background image to use
         theme = getIntent().getIntExtra(KEY_THEME, THEME_ZOO);
