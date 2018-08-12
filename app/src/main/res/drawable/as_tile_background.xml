@@ -7,7 +7,7 @@
       android:drawable="@drawable/tile_red"
       android:maxLevel="1"/>
    <item
-      android:drawable="@drawable/tile_white"
+      android:drawable="@drawable/tile_gray"
       android:maxLevel="2"/>
    <item
       android:drawable="@drawable/tile_available"
@@ -16,6 +16,6 @@
        android:drawable="@drawable/tile_blue"
        android:maxLevel="4"/>
    <item
-       android:drawable="@drawable/tile_white"
+       android:drawable="@drawable/tile_gray"
        android:maxLevel="5"/>
 </level-list>
