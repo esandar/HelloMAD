@@ -88,10 +88,11 @@
 
     <string name="select_number_first_text">Please first select a number then fill in to a tile</string>
     <string name="no_move_text">You haven\'t made any move yet</string>
-    <string name="finish_game_text">Congratulations! You\'ve just unlocked XXX!</string>
+    <string name="finish_game_text">Congratulations! You win the game!</string>
+    <string name="unlock_text">You unlocked new things!</string>
 
     <string name="back_to_main">Back to Main</string>
-    <string name="play_again">Play Again</string>
+    <string name="play_again">Keep Playing</string>
     <string name="register">Register and share!</string>
     <string name="search_friends">Search and add friends</string>
     <string name="your_friends">Leaderboard</string>
@@ -101,4 +102,5 @@
     <string name="add">Add</string>
     <string name="nearby">Nearby users</string>
     <string name="congrats">Congrats</string>
+    <string name="level">Your have achieved one more level!  </string>
 </resources>

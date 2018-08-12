@@ -43,7 +43,7 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         token = FirebaseInstanceId.getInstance().getToken();
 
-        final TextView score = findViewById(R.id.score);
+        //final TextView score = findViewById(R.id.score);
         final TextView level = findViewById(R.id.level);
 
         DatabaseReference tokenRef = mDatabase.child("asusers").child(token);
@@ -51,19 +51,24 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
         tokenRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ASUser self = dataSnapshot.getValue(ASUser.class);
-                int scoreNum = self.getScore();
-                int levelNum = self.getLevel();
-                Log.d("Friends", "level is "+ String.valueOf(levelNum));
-                level.setText(String.valueOf(levelNum));
-                score.setText(String.valueOf(scoreNum));
-                if (self.getFriends() == null) {
-                    Toast.makeText(AS_Leaderboard_Activity.this,
-                            "You have not added any friend!", Toast.LENGTH_SHORT).show();
+                if (dataSnapshot.exists()) {
+                    ASUser self = dataSnapshot.getValue(ASUser.class);
+                    //int scoreNum = self.getScore();
+                    int levelNum = self.getLevel();
+                    Log.d("Friends", "level is "+ String.valueOf(levelNum));
+                    level.setText(String.valueOf(levelNum));
+                    //score.setText(String.valueOf(scoreNum));
+                    if (self.getFriends() == null) {
+                        Toast.makeText(AS_Leaderboard_Activity.this,
+                                "You have not added any friend!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Map<String, String> friendTokens = new HashMap<>();
+                        friendTokens.putAll(self.getFriends());
+                        friends.addAll(friendTokens.values());
+                    }
                 } else {
-                    Map<String, String> friendTokens = new HashMap<>();
-                    friendTokens.putAll(self.getFriends());
-                    friends.addAll(friendTokens.values());
+                    Toast.makeText(AS_Leaderboard_Activity.this,
+                            "You have not registered to share!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -97,7 +102,7 @@ class LeaderboardAdapter extends ArrayAdapter {
         final String friendToken = friendTokens.get(position);
 
         final TextView friendName = rowView.findViewById(R.id.username);
-        final TextView friendScore = rowView.findViewById(R.id.friend_score);
+        //final TextView friendScore = rowView.findViewById(R.id.friend_score);
         final TextView friendLevel = rowView.findViewById(R.id.friend_level);
         DatabaseReference tokenRef = mDatabase.child("asusers").child(friendToken);
         tokenRef.addValueEventListener(new ValueEventListener() {
@@ -105,7 +110,7 @@ class LeaderboardAdapter extends ArrayAdapter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ASUser user = dataSnapshot.getValue(ASUser.class);
                 friendName.setText(user.getUsername());
-                friendScore.setText(String.valueOf(user.getScore()));
+                //friendScore.setText(String.valueOf(user.getScore()));
                 friendLevel.setText(String.valueOf(user.getLevel()));
             }
 

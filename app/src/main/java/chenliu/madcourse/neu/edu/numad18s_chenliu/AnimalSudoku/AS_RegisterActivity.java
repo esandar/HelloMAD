@@ -75,6 +75,10 @@ public class AS_RegisterActivity extends AppCompatActivity {
                         Toast.makeText(AS_RegisterActivity.this,
                                 "Registered!", Toast.LENGTH_SHORT).show();
                     }
+                    if (GlobalClass.updatedLocation != null) {
+                        user.setLatitude(GlobalClass.updatedLocation.getLatitude());
+                        user.setLongitude(GlobalClass.updatedLocation.getLongitude());
+                    }
                     mDatabase.child("asusers").child(token).setValue(user);
                     GlobalClass.as_users.put(username, token);
                 } else {
