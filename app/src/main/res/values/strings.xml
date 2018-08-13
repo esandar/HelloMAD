@@ -75,17 +75,19 @@
     </string>
     <string name="as_ins">
         This game plays just as normal sudoku. Instead of filling the board with numbers, this game asks to fill with animal icons. \n\
-        This orientation for this game is locked in landscape view.
-        1. Before start, you have to register yourself to use friends feature, including leaderboard and adding nearby users. \n\
-        2. Cheat button is to unlock all animals and themes for testing purpose. \n\
-        3. You only have four animals available at the beginning, and you will unlock new animals while you playing. Once you have all nine animals activated in a theme
-        you can play 9x9 game on a large board. After you finish 3 games in a large board, you will unlock the next theme. When start, the aqua park and rainforest image are
-        not in gray color which means they are still locked. Once unlocked, their color will change. \n\
-        4. The progress button on the main menu is to check your current game status. It will show the current available features you have activated (Green color). \n\
-        5. When you select a theme on the map, you can see the theme you selected is highlighted on the background (This is a feature). \n\
-        6. When playing a game, you have to select an animal from the left stockboard to fill the main game board. If the tile you select turn green, it means a valid move;
-         if the tile turn red, that means same animal already appear in the same row or colume or same small board, which will give you a clue of wrong move. When the board is all filled, the system will automatically
-        calculate if you have won. \n\
+        This orientation for this game is locked in landscape view. \n\
+        1. Friends button is to register yourself to the database and add friends. You can use map sensor to add nearby users (on true android system, not emulator). You can also view everyone\'\s level on leaderboard.
+        You can send congrat to any user and their device will receive icloud message. \n\
+        2. Progress button: you have to play more games to unlock the in game features. The green color shows your current available features. You can unlock one animal of a theme after you finish one 4*4 game.
+        Once you have all 9 animals available, you unlock the 9x9 game. After you finish 3 9x9 games, you can unlock next theme. \n\
+        3. Cheat button is to allow you unlock all features for testing purpose.\n\
+        4. New game button: you will be lead to a map screen. You can see three themes on the map. Activated theme is in full color and locked themes are in gray color. Once it is unlocked, it will automatically become full color. Under the button of each theme, you can select 4x4 or 9x9 games.
+        When you select theme, the background of the activity will change and have the selected one highlighted. \n\
+        5. In a 4x4 game or 9x9 game, you should select an animal from the left stock board to fill the game board at the center. Once stock selected, the color of the tile will turn blue. You can fill the game board with the selected animal. After you click on a tile, if the tile turn green, that means a valid move.
+        However if it turns red, that means you should double check because same animal already exists in the same row,
+        or in the same column or in the same small board. Revert button is to cancel the latest move.\n\
+        6. Once the game board is all filled, it will calculate by itself that you win or not. If you don't win, nothing happens.
+        If you win, there will be a notification saying you win, if you level up or not and any new feature is unlocked. \n\
     </string>
     <string name="zoo_label">Zoo</string>
     <string name="aquarium_label">Aqua Park</string>
