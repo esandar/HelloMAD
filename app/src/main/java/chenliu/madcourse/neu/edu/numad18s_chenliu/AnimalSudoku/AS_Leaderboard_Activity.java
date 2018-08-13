@@ -34,6 +34,7 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String token;
     private List<String> friends = new ArrayList<>();
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
 
         //final TextView score = findViewById(R.id.score);
         final TextView level = findViewById(R.id.level);
+        listView = findViewById(R.id.leaderboard_listview);
 
         DatabaseReference tokenRef = mDatabase.child("asusers").child(token);
 
@@ -58,7 +60,7 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
                     Log.d("Friends", "level is "+ String.valueOf(levelNum));
                     level.setText(String.valueOf(levelNum));
                     //score.setText(String.valueOf(scoreNum));
-                    if (self.getFriends() == null) {
+                    if (self.getFriends() == null || self.getFriends().isEmpty()) {
                         Toast.makeText(AS_Leaderboard_Activity.this,
                                 "You have not added any friend!", Toast.LENGTH_SHORT).show();
                     } else {
@@ -70,14 +72,12 @@ public class AS_Leaderboard_Activity extends AppCompatActivity {
                     Toast.makeText(AS_Leaderboard_Activity.this,
                             "You have not registered to share!", Toast.LENGTH_SHORT).show();
                 }
-
+                listView.setAdapter(new LeaderboardAdapter(AS_Leaderboard_Activity.this, friends));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }});
-        ListView listView = findViewById(R.id.leaderboard_listview);
-        listView.setAdapter(new LeaderboardAdapter(AS_Leaderboard_Activity.this, friends, mDatabase));
 
     }
 }
@@ -87,11 +87,11 @@ class LeaderboardAdapter extends ArrayAdapter {
     private final List<String> friendTokens;
     private DatabaseReference mDatabase;
 
-    public LeaderboardAdapter(Activity context, List<String> friends, DatabaseReference mDatabase) {
+    public LeaderboardAdapter(Activity context, List<String> friends) {
         super(context, R.layout.as_activity_leaderboard, friends);
         this.context = context;
         this.friendTokens = friends;
-        this.mDatabase = mDatabase;
+        this.mDatabase = FirebaseDatabase.getInstance().getReference();;
     }
 
     @Override
